@@ -51,16 +51,16 @@ jobs:
         run: |
           # Start the backend server in the background with https profile
           cd ${{ env.WORKING_DIRECTORY }}
-          nohup dotnet run --configuration ${{ env.CONFIGURATION }} --launch-profile https &
+          nohup dotnet run --configuration ${{ env.CONFIGURATION }} &
 
       - name: Wait for server to start
         run: |
-          # Wait for the server to be available at localhost:7012
+          # Wait for the server to be available at http://localhost:5226
           for i in {1..30}; do
-            curl -s https://localhost:7012 && break || echo "Waiting for server..."; sleep 5;
+            curl -s http://localhost:5226 && break || echo "Waiting for server..."; sleep 5;
           done
         # This ensures that the test only starts once the backend is ready to respond
 
       - name: Run tests
-        run: dotnet test ${{ env.TEST_PATH }} --logger trx -- RunConfiguration.NoDefaultSslValidation=true
+        run: dotnet test ${{ env.TEST_PATH }}
     
