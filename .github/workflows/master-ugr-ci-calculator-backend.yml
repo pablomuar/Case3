@@ -46,9 +46,20 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
         # Setup the .NET SDK version specified in the environment variables
-      - name: run tests
+
+      - name: Start backend server
+        run: |
+          # Start the backend server in the background
+          nohup dotnet run --configuration ${{ env.CONFIGURATION }} & 
+
+      - name: Wait for server to start
+        run: |
+          # Wait for the server to be available at localhost:7012
+          for i in {1..30}; do
+            curl -s http://localhost:7012 && break || echo "Waiting for server..."; sleep 5;
+          done
+        # This ensures that the test only starts once the backend is ready to respond
+
+      - name: Run tests
         run: dotnet test ${{ env.TEST_PATH }}
-      
-      
- 
     
