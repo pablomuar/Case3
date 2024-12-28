@@ -51,7 +51,7 @@ jobs:
         run: |
           # Start the backend server in the background
           cd ${{ env.WORKING_DIRECTORY }}
-          dotnet run --configuration ${{ env.CONFIGURATION }}
+          dotnet run --configuration ${{ env.CONFIGURATION }} --launch-profile https
           #nohup dotnet run --configuration ${{ env.CONFIGURATION }} & 
 
       - name: Wait for server to start
