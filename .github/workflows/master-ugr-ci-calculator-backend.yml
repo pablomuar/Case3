@@ -50,6 +50,7 @@ jobs:
       - name: Start backend server
         run: |
           # Start the backend server in the background
+          cd ${{ env.WORKING_DIRECTORY }}
           nohup dotnet run --configuration ${{ env.CONFIGURATION }} & 
 
       - name: Wait for server to start
