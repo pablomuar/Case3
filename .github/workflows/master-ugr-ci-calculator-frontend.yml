@@ -48,6 +48,12 @@ jobs:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
         # Setup the .NET SDK version specified in the environment variables
 
+      - name: Install Playwright Browsers
+        run: |
+          # Install Playwright and required browsers
+          npm install -g playwright
+          npx playwright install
+
       - name: Start frontend server
         run: |
           # Start the frontend server in the background
