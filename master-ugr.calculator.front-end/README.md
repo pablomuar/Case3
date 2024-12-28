@@ -10,7 +10,9 @@ The calculator supports the following operations:
 - Subtraction
 - Multiplication
 - Division
-- Prime number check
+- Attribute Number Check:
+	- Displays whether a Number is Prime or Not.
+	- Displays whether a Number is Odd or Not.
 ## Contributing
 If you would like to contribute to this project, please follow these steps:
 1. Fork the repository.

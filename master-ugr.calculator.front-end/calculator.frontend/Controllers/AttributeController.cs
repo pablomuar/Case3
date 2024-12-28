@@ -9,13 +9,17 @@ namespace calculator.frontend.Controllers
         {
             return View();
         }
-        const string base_url = "https://master-ugr-ci-backend-uat.azurewebsites.net";
-        private string ExecuteOperation(string number)
+        private string base_url =
+            Environment.GetEnvironmentVariable("CALCULATOR_BACKEND_URL") ??
+            "https://master-ugr-ci-backend-uat.azurewebsites.net";
+        const string api = "api/Calculator";
+        private KeyValuePair<string,string> ExecuteOperation(string number)
         {
-            bool? result =  null;
+            bool? raw_prime =  null;
+            bool? raw_odd = null;
             var clientHandler = new HttpClientHandler();
             var client = new HttpClient(clientHandler);
-            var url = $"{base_url}/api/Calculator/is_prime?number={number}";
+            var url = $"{base_url}/api/Calculator/number_attribute?number={number}";
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -26,27 +30,44 @@ namespace calculator.frontend.Controllers
                 response.EnsureSuccessStatusCode();
                 var body = response.Content.ReadAsStringAsync().Result;
                 var json = JObject.Parse(body);
-                var result_json = json["result"];
-                if (result_json != null)
+                var prime = json["prime"];
+                var odd = json["odd"];
+                if (prime != null)
                 {
-                    result = result_json.Value<bool>();
+                    raw_prime = prime.Value<bool>();
                 }
+                if (odd != null)
+                {
+                    raw_odd = odd.Value<bool>();
+                }
+
             }
-            var yesOrNo = "unknown";
-            if (result != null && result.Value)
+            var isPrime = "unknown";
+            if (raw_prime != null && raw_prime.Value)
             {
-                yesOrNo = "Yes";
+                isPrime = "Yes";
             }
-            else if (result != null && !result.Value)
+            else if (raw_prime != null && !raw_prime.Value)
             {
-                yesOrNo = "No";
+                isPrime = "No";
             }
-            return yesOrNo;
+            var isOdd = "unknown";
+            if (raw_odd != null && raw_odd.Value)
+            {
+                isOdd = "Yes";
+            }
+            else if (raw_odd != null && !raw_odd.Value)
+            {
+                isOdd = "No";
+            }
+            return new KeyValuePair<string,string>(isPrime,isOdd);
         }
         [HttpPost]
         public ActionResult Index(string number)
         {
-            ViewBag.IsPrime = ExecuteOperation(number);
+            var result = ExecuteOperation(number);
+            ViewBag.IsPrime = result.Key;
+            ViewBag.IsOdd = result.Value;
             return View();
         }
     }

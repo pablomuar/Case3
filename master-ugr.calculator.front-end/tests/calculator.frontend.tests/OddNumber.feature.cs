@@ -19,7 +19,7 @@ namespace calculator.frontend.tests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class PrimeNumberFeature : object, Xunit.IClassFixture<PrimeNumberFeature.FixtureData>, System.IDisposable
+    public partial class OddNumberFeature : object, Xunit.IClassFixture<OddNumberFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace calculator.frontend.tests
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "PrimeNumber.feature"
+#line 1 "OddNumber.feature"
 #line hidden
         
-        public PrimeNumberFeature(PrimeNumberFeature.FixtureData fixtureData, calculator_frontend_tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public OddNumberFeature(OddNumberFeature.FixtureData fixtureData, calculator_frontend_tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,8 +40,7 @@ namespace calculator.frontend.tests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "PrimeNumber", "\tAs Alice (the customer)\r\n\tI want to know whether a number is prime or not\r\n\tSo I" +
-                    " can create discount campaings", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "Odd Number", null, ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,25 +80,19 @@ namespace calculator.frontend.tests
             this.TestTearDown();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="Checking several prime numbers")]
-        [Xunit.TraitAttribute("FeatureTitle", "PrimeNumber")]
-        [Xunit.TraitAttribute("Description", "Checking several prime numbers")]
-        [Xunit.InlineDataAttribute("2", "Yes", new string[0])]
-        [Xunit.InlineDataAttribute("3", "Yes", new string[0])]
-        [Xunit.InlineDataAttribute("5", "Yes", new string[0])]
-        [Xunit.InlineDataAttribute("7", "Yes", new string[0])]
-        [Xunit.InlineDataAttribute("11", "Yes", new string[0])]
-        [Xunit.InlineDataAttribute("997", "Yes", new string[0])]
-        [Xunit.InlineDataAttribute("98689", "Yes", new string[0])]
-        [Xunit.InlineDataAttribute("86743", "Yes", new string[0])]
-        public void CheckingSeveralPrimeNumbers(string number, string result, string[] exampleTags)
+        [Xunit.SkippableTheoryAttribute(DisplayName="A number is odd if it is not divisible by 2")]
+        [Xunit.TraitAttribute("FeatureTitle", "Odd Number")]
+        [Xunit.TraitAttribute("Description", "A number is odd if it is not divisible by 2")]
+        [Xunit.InlineDataAttribute("1", "true", new string[0])]
+        [Xunit.InlineDataAttribute("3", "true", new string[0])]
+        public void ANumberIsOddIfItIsNotDivisibleBy2(string number, string result, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("number", number);
             argumentsOfScenario.Add("result", result);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking several prime numbers", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 7
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A number is odd if it is not divisible by 2", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 3
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -109,11 +102,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 8
- testRunner.When(string.Format("number {0} is checked", number), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 4
+ testRunner.Given(string.Format("a number {0}", number), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 9
- testRunner.Then(string.Format("the answer to know whether is prime or not is {0}", result), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 5
+ testRunner.When("I check if it is odd", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 6
+ testRunner.Then(string.Format("it should be odd {0}", result), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -126,12 +122,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                PrimeNumberFeature.FeatureSetup();
+                OddNumberFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                PrimeNumberFeature.FeatureTearDown();
+                OddNumberFeature.FeatureTearDown();
             }
         }
     }
