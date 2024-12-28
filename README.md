@@ -66,12 +66,12 @@ Create a fork from Case3.
 
 Update the workflows in main branch:
   - In the workflow master-ugr-ci-backend-uat, replace the value of the variable CALCULATOR_BACKEND_URL with the URL of the backend in UAT
-       - CALCULATOR_BACKEND_URL: https://spock-calculator-backend-uat.azurewebsites.net/ *IMPORTANT KEEP The final slash (/)*
+       - CALCULATOR_BACKEND_URL: https://spock-calculator-backend-uat.azurewebsites.net
   - In the workflow master-ugr-ci-frontend-uat, replace the value of the variable CALCULATOR_FRONTEND_URL with the URL of the frontend in UAT
 	   - CALCULATOR_FRONTEND_URL: https://spock-calculator-frontend-uat.azurewebsites.net 
   - In the workflow master-ugr-ci-prod:
 		- Replace the value of the variable CALCULATOR_BACKEND_URL_UAT with the URL of the backend in UAT
-	         - CALCULATOR_BACKEND_URL_UAT: https://spock-calculator-backend-uat.azurewebsites.net/ *IMPORTANT KEEP The final slash (/)*
+	         - CALCULATOR_BACKEND_URL_UAT: https://spock-calculator-backend-uat.azurewebsites.net
 	    - Replace the value of the variable CALCULATOR_FRONTEND_URL_UAT with the URL of the frontend in UAT
 			 - CALCULATOR_FRONTEND_URL_UAT: https://spock-calculator-frontend-uat.azurewebsites.net
 	    - Replace the value of the variable CALCULATOR_FRONTEND_URL_PROD with the URL of the frontend in PROD
