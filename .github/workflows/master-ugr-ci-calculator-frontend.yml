@@ -13,6 +13,7 @@ env:
   DOTNET_CORE_VERSION: 8.0.x
   WORKING_DIRECTORY: master-ugr.calculator.front-end/calculator.frontend
   TEST_PATH: master-ugr.calculator.front-end/tests/calculator.frontend.tests
+  BACKEND_URL: https://pablomuar-calculator-backend-uat.azurewebsites.net
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,15 +41,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         # Checkout the repository (each job runs in a fresh VM)
-  
+
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
         # Setup the .NET SDK version specified in the environment variables
-      - name: run tests
+
+      - name: Start frontend server
+        run: |
+          # Start the frontend server in the background
+          export BACKEND_URL=${{ env.BACKEND_URL }}
+          cd ${{ env.WORKING_DIRECTORY }}
+          nohup dotnet run --configuration ${{ env.CONFIGURATION }} &
+
+      - name: Wait for server to start
+        run: |
+          # Wait for the server to be available at http://localhost:5140
+          for i in {1..30}; do
+            curl -s http://localhost:5140 && break || echo "Waiting for server..."; sleep 5;
+          done
+        # This ensures that the test only starts once the fronte is ready to respond
+
+      - name: Run tests
         run: dotnet test ${{ env.TEST_PATH }}
-      
-      
- 
-    
