@@ -49,7 +49,7 @@ jobs:
 
       - name: Start backend server
         run: |
-          # Start the backend server in the background with https profile
+          # Start the backend server in the background
           cd ${{ env.WORKING_DIRECTORY }}
           nohup dotnet run --configuration ${{ env.CONFIGURATION }} &
 
