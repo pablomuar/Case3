@@ -68,9 +68,9 @@ namespace calculator.frontend.tests.steps
 			await page.ClickAsync("#calculateButton");
 		}
 
-		[Then(@"the result should be ""(.*)""")]
-		[Then(@"the result is ""(.*)""")]
-		[Then(@"the result shall be ""(.*)""")]
+		[Then(@"the result should be (.*)")]
+		[Then(@"the result is (.*)")]
+		[Then(@"the result shall be (.*)")]
 		public async Task ThenTheResultShouldBe(string expectedResult)
 		{
 			var page = (IPage)_scenarioContext["page"];
