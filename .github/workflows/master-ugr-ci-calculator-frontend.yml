@@ -57,9 +57,8 @@ jobs:
       - name: Start frontend server
         run: |
           # Start the frontend server in the background
-          export BACKEND_URL=${{ env.BACKEND_URL }}
           cd ${{ env.WORKING_DIRECTORY }}
-          nohup dotnet run --configuration ${{ env.CONFIGURATION }} &
+          nohup dotnet run --configuration ${{ env.CONFIGURATION }} -- --CALCULATOR_BACKEND_URL=${{ env.BACKEND_URL }} &
 
       - name: Wait for server to start
         run: |
