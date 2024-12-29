@@ -67,34 +67,26 @@ namespace calculator.frontend.tests.steps
 			await page.SelectOptionAsync("#operation", "Divide");
 			await page.ClickAsync("#calculateButton");
 		}
-		[Then(@"the result should be (.*)")]
-		[Then(@"the result is (.*)")]
-		[Then(@"the result shall be (.*)")]
-		public async Task ThenTheResultShouldBe(string expectedResult)
-		{
-			var page = (IPage)_scenarioContext["page"];
-			var resultText = await page.InnerTextAsync("#result");
-			var americanDouble = expectedResult.Replace(",", ".");
-			var latinDouble = expectedResult.Replace(".", ",");
-			var ok = expectedResult.Equals(americanDouble) ||
-				expectedResult.Equals(latinDouble);
-			Assert.True(ok, $"expected {expectedResult} but actual {resultText}");
-		}
 
 		[Then(@"the result should be ""(.*)""")]
-		public async Task ThenTheResultShouldBeSpecialValue(string expectedResult)
+		[Then(@"the result is ""(.*)""")]
+		[Then(@"the result shall be ""(.*)""")]
+		public async Task ThenTheResultShouldBe(string expectedResult)
 		{
 			var page = (IPage)_scenarioContext["page"];
 			var resultText = await page.InnerTextAsync("#result");
 
 			if (expectedResult == "NaN")
 			{
-				Assert.True(double.TryParse(resultText, out var result) && double.IsNaN(result),
-					$"Expected result to be NaN, but it was {resultText}.");
+				Assert.True(double.IsNaN(double.Parse(resultText, System.Globalization.CultureInfo.InvariantCulture)),
+					$"Expected result to be NaN, but got {resultText}");
 			}
 			else
 			{
-				Assert.Fail($"Unhandled special value: {expectedResult}");
+				var americanDouble = expectedResult.Replace(",", ".");
+				var latinDouble = expectedResult.Replace(".", ",");
+				var ok = expectedResult.Equals(americanDouble) || expectedResult.Equals(latinDouble);
+				Assert.True(ok, $"Expected {expectedResult} but actual {resultText}");
 			}
 		}
 	}
