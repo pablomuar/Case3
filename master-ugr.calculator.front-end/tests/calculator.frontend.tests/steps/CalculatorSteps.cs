@@ -81,22 +81,5 @@ namespace calculator.frontend.tests.steps
                 expectedResult.Equals(latinDouble);
             Assert.True(ok, $"expected {expectedResult} but actual {resultText}");
         }
-
-		[Then(@"the result should be ""(.*)""")]
-		public async Task ThenTheResultShouldBeSpecialValue(string expectedResult)
-		{
-			var page = (IPage)_scenarioContext["page"];
-			var resultText = await page.InnerTextAsync("#result");
-
-			if (expectedResult == "NaN")
-			{
-				Assert.True(double.TryParse(resultText, out var result) && double.IsNaN(result),
-					$"Expected result to be NaN, but it was {resultText}.");
-			}
-			else
-			{
-				Assert.Fail($"Unhandled special value: {expectedResult}");
-			}
-		}
 	}
 }
