@@ -27,3 +27,9 @@ Scenario: Division of two numbers returning non integer value
 	And the second number is 4
 	When I divide first number by second number
 	Then the result is 2.5
+
+Scenario: Division by zero
+    Given the first number is 10
+    And the second number is 0
+    When I divide first number by second number
+    Then the result should be "NaN"
