@@ -72,5 +72,20 @@ namespace calculator.lib.test.steps
             var result = _scenarioContext.Get<double>("result");
             Assert.Equal(result, expectedResult);
         }
-    }
+
+		[Then(@"the result should be ""(.*)""")]
+		public void ThenTheResultShouldBeSpecialValue(string expectedResult)
+		{
+			var result = _scenarioContext.Get<double>("result");
+
+			if (expectedResult == "NaN")
+			{
+				Assert.True(double.IsNaN(result), "Expected result to be NaN, but it was not.");
+			}
+			else
+			{
+				Assert.Fail($"Unhandled special value: {expectedResult}");
+			}
+		}
+	}
 }
