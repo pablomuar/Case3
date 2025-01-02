@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Text.Json;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.CommonModels;
-using static System.Net.WebRequestMethods;
+using Xunit; // Asegúrate de tener esta referencia para usar Assert
 
 namespace calculator.lib.test.steps
 {
@@ -37,6 +32,7 @@ namespace calculator.lib.test.steps
         {
             using (var client = new HttpClient())
             {
+                // Asegúrate de que "urlBase" esté definido en el contexto
                 var urlBase = _scenarioContext.Get<string>("urlBase");
                 var firstNumber = _scenarioContext.Get<int>("firstNumber");
                 var secondNumber = _scenarioContext.Get<int>("secondNumber");
@@ -72,6 +68,12 @@ namespace calculator.lib.test.steps
             ApiCall("divide");
         }
 
+        [When(@"I divide both numbers")] // Agregado para resolver el paso faltante
+        public void WhenIDivideBothNumbers()
+        {
+            ApiCall("divide");
+        }
+
         [When(@"I multiply both numbers")]
         public void WhenIMultiplyBothNumbers()
         {
@@ -84,15 +86,17 @@ namespace calculator.lib.test.steps
             ApiCall("subtract");
         }
 
-        [Then(@"the result should be (.*)")]
-        [Then(@"the result shall be (.*)")]
-        [Then(@"the result is (.*)")]
+        // Definiciones de pasos para valores numéricos específicos
+        [Then(@"the result should be (-?\d+(\.\d+)?)")]
+        [Then(@"the result shall be (-?\d+(\.\d+)?)")]
+        [Then(@"the result is (-?\d+(\.\d+)?)")]
         public void ThenTheResultShouldBe(double expectedResult)
         {
             var result = _scenarioContext.Get<double>("result");
             Assert.Equal(expectedResult, result);
         }
 
+        // Definición específica para NaN
         [Then(@"the result shall be NaN")]
         public void ThenTheResultShallBeNaN()
         {
