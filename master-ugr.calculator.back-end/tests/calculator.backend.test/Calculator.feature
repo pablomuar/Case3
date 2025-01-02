@@ -28,8 +28,14 @@ Scenario: Division of two numbers returning non integer value
 	When I divide first number by second number
 	Then the result is 2.5
 
-Scenario: Division by zero
-    Given the first number is 10
-    And the second number is 0
-    When I divide first number by second number
-    Then the result should be "NaN"
+Scenario: Division by 0 shall return NaN
+	Given the first number is 30
+	And the second number is 0
+	When I divide both numbers
+	Then the result shall be NaN
+
+Scenario: Determine if a number is prime and calculate its square root
+    Given the number is 49
+    When I check if it is prime and calculate its square root
+    Then the result should indicate it is not prime
+    And the square root should be 7

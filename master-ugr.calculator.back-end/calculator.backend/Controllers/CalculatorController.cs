@@ -31,7 +31,12 @@ namespace CalculatorAPI.Controllers
         [HttpGet("divide")]
         public ActionResult<double> Divide([FromQuery] double a, [FromQuery] double b)
         {
-			var final_result = Calculator.Divide((int)a, (int)b);
+            if(b == 0)
+            {
+                return BadRequest("NaN");
+            }
+
+            var final_result = Calculator.Divide((int)a, (int)b);
 			return Ok(new { result = final_result });
         }
 
@@ -39,7 +44,10 @@ namespace CalculatorAPI.Controllers
         public ActionResult<bool> IsPrime([FromQuery] int number)
         {
             var is_prime = NumberAttributter.IsPrime(number);
-            return Ok(new { result = is_prime });
+            var square = NumberAttributter.SquareRoot(number);
+            return Ok(new { result = is_prime,
+                            squareRoot = square
+            });
         }
 
         [HttpGet("number_attribute")]
