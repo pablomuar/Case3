@@ -11,21 +11,31 @@ env:
 jobs:
   zap-scan:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Run ZAP DAST Scan
-      run: |
-        docker run -t --rm \
-          -v $(pwd)/zap-reports:/zap/wrk \
-          softwaresecurityproject/zap-stable zap-baseline.py \
-          -t $URL_TO_SCAN \
-          -r /zap/wrk/zap_report.html
+      - name: Create zap-reports directory
+        run: mkdir -p zap-reports
 
-    - name: Upload ZAP Report
-      uses: actions/upload-artifact@v3
-      with:
-        name: frontend-zap-report
-        path: zap_report.html
+      - name: Run ZAP DAST Scan
+        run: |
+          docker run -t --rm \
+            -v $(pwd)/zap-reports:/zap/wrk \
+            --user $(id -u):$(id -g) \
+            softwaresecurityproject/zap-stable zap-baseline.py \
+            -t $URL_TO_SCAN \
+            -r /zap/wrk/zap_report.html
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: frontend-zap-report
+          path: zap-reports/zap_report.html
+
+      - name: Archive raw ZAP output
+        uses: actions/upload-artifact@v3
+        with:
+          name: raw-zap-output
+          path: zap-reports/
