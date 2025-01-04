@@ -1,4 +1,4 @@
-name: ZAP backend production nightly analysis
+name: ZAP frontend production nightly analysis
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: "0 0 * * *"
 
 env:
-  URL_TO_SCAN: "https://pablomuar-calculator-backend.azurewebsites.net"
+  URL_TO_SCAN: "https://pablomuar-calculator-frontend.azurewebsites.net"
 
 jobs:
   zap-scan:
@@ -27,5 +27,5 @@ jobs:
     - name: Upload ZAP Report
       uses: actions/upload-artifact@v3
       with:
-        name: backend-zap-report
+        name: frontend-zap-report
         path: zap_report.html
