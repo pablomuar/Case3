@@ -15,4 +15,4 @@ jobs:
     - name: ZAP Scan
       uses: zaproxy/action-full-scan@v0.12.0
       with:
-        target: $URL_TO_SCAN
+        target: ${{ env.URL_TO_SCAN }}
