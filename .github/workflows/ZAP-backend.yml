@@ -19,9 +19,10 @@ jobs:
     - name: Run ZAP DAST Scan
       run: |
         docker run -t --rm \
+          -v $(pwd)/zap-reports:/zap/wrk \
           softwaresecurityproject/zap-stable zap-baseline.py \
           -t $URL_TO_SCAN \
-          -r zap_report.html
+          -r /zap/wrk/zap_report.html
 
     - name: Upload ZAP Report
       uses: actions/upload-artifact@v3
