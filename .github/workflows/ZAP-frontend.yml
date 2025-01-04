@@ -6,36 +6,13 @@ on:
     - cron: "0 0 * * *"
 
 env:
-  URL_TO_SCAN: "https://pablomuar-calculator-frontend.azurewebsites.net"
+  URL_TO_SCAN: "https://pablomuar-calculator-frontend.azurewebsites.net/"
 
 jobs:
   zap-scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Create zap-reports directory
-        run: mkdir -p zap-reports
-
-      - name: Run ZAP DAST Scan
-        run: |
-          docker run -t --rm \
-            -v $(pwd)/zap-reports:/zap/wrk \
-            --user $(id -u):$(id -g) \
-            softwaresecurityproject/zap-stable zap-baseline.py \
-            -t $URL_TO_SCAN \
-            -r /zap/wrk/zap_report.html
-
-      - name: Upload ZAP Report
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: frontend-zap-report
-          path: zap-reports/zap_report.html
-
-      - name: Archive raw ZAP output
-        uses: actions/upload-artifact@v3
-        with:
-          name: raw-zap-output
-          path: zap-reports/
+    - name: ZAP Scan
+      uses: zaproxy/action-full-scan@v0.12.0
+      with:
+        target: $URL_TO_SCAN
