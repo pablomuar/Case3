@@ -1,9 +1,9 @@
 Feature: Square Root
 
 Scenario Outline: Calculate the square root of a number
-    Given a number <number>
-    When I calculate its square root
-    Then the result should be <sqrt>
+    Given a square-root number <number>
+    When I calculate the square root of the number
+    Then the square root result should be <sqrt>
     Examples:
     | number | sqrt  |
     | 1      | 1     |
