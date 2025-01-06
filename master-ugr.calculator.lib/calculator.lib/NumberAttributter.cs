@@ -32,7 +32,7 @@ namespace calculator.lib
 
         public static double SquareRoot(int number)
         {
-            return Math.Sqrt(number);
+            return Math.Round(Math.Sqrt(number), 2);
         }
     }
 }
