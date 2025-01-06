@@ -9,33 +9,33 @@ using Xunit; // Necesario para usar Assert
 namespace calculator.lib.test.steps
 {
     [Binding]
-    public class SquareRootSteps
+    public class OddNumberSteps
     {
         private readonly ScenarioContext _scenarioContext;
-        public SquareRootSteps(ScenarioContext scenarioContext)
+        public OddNumberSteps(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
         }
 
         [Given(@"a number (.*)")]
-        public void GivenANumber(double number)
+        public void WhenNumberIsChecked(int number)
         {
             _scenarioContext.Add("number", number);
         }
 
-        [When("I calculate the square root")]
-        public void ICalculateTheSquareRoot()
+        [When("I check if it is odd")]
+        public void ICheckIfItIsOdd()
         {
-            var number = _scenarioContext.Get<double>("number");
-            var squareRoot = Math.Sqrt(number);
-            _scenarioContext.Add("squareRoot", squareRoot);
+            var number = _scenarioContext.Get<int>("number");
+            var isOdd = NumberAttributter.IsOdd(number);
+            _scenarioContext.Add("isOdd", isOdd);
         }
 
-        [Then("the result should be (.*)")]
-        public void TheResultShouldBe(double expected)
+        [Then("it should be odd (.*)")]
+        public void ItShouldBeOdd(bool expected)
         {
-            var squareRoot = _scenarioContext.Get<double>("squareRoot");
-            Assert.Equal(expected, squareRoot, precision: 2);
+            var isOdd = _scenarioContext.Get<bool>("isOdd");
+            Assert.Equal(expected, isOdd);
         }
     }
 }
