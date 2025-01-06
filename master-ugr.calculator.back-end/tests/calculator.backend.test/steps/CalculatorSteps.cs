@@ -68,11 +68,6 @@ namespace calculator.lib.test.steps
         {
             ApiCall("add");
         }
-        [When(@"I divide first number by second number")]
-        public void WhenIDivideFirstNumberBySecondNumber()
-        {
-            ApiCall("divide");
-        }
 
         [When(@"I multiply both numbers")]
         public void WhenIMultiplyBothNumbers()
@@ -96,8 +91,8 @@ namespace calculator.lib.test.steps
         }
 
         //DECLARAMOS LOS METODOS PARA LOS PASOS DE LAS PRUEBAS
-        [When(@"I divide both numbers")]
-        public void WhenIDivideBothNumbers()
+        [When(@"I divide first number by second number")]
+        public void WhenIDivideFirstNumberBySecondNumber()
         {
             ApiCall("divide");
         }
