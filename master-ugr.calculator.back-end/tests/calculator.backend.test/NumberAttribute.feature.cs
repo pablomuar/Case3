@@ -40,7 +40,8 @@ namespace calculator.backend.test
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "Number Attribute", "  I want to have a REST API which includes information\r\n  about a number.", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "Number Attribute", "  As a user, I want to know the attributes of a number\r\n  So that I can use them " +
+                    "for mathematical analysis.", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,16 +81,16 @@ namespace calculator.backend.test
             this.TestTearDown();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="Checking several numbers")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Checking attributes of valid numbers")]
         [Xunit.TraitAttribute("FeatureTitle", "Number Attribute")]
-        [Xunit.TraitAttribute("Description", "Checking several numbers")]
+        [Xunit.TraitAttribute("Description", "Checking attributes of valid numbers")]
         [Xunit.InlineDataAttribute("2", "true", "false", "1.4142135624", new string[0])]
         [Xunit.InlineDataAttribute("6", "false", "false", "2.4494897428", new string[0])]
         [Xunit.InlineDataAttribute("7", "true", "true", "2.6457513111", new string[0])]
         [Xunit.InlineDataAttribute("8", "false", "false", "2.8284271247", new string[0])]
         [Xunit.InlineDataAttribute("9", "false", "true", "3", new string[0])]
         [Xunit.InlineDataAttribute("10", "false", "false", "3.1622776602", new string[0])]
-        public void CheckingSeveralNumbers(string number, string prime, string odd, string squareRoot, string[] exampleTags)
+        public void CheckingAttributesOfValidNumbers(string number, string prime, string odd, string squareRoot, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -97,7 +98,7 @@ namespace calculator.backend.test
             argumentsOfScenario.Add("prime", prime);
             argumentsOfScenario.Add("odd", odd);
             argumentsOfScenario.Add("squareRoot", squareRoot);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking several numbers", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking attributes of valid numbers", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -119,6 +120,102 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
 #line 9
     testRunner.And(string.Format("the square root of the number is {0}", squareRoot), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Checking attributes of zero")]
+        [Xunit.TraitAttribute("FeatureTitle", "Number Attribute")]
+        [Xunit.TraitAttribute("Description", "Checking attributes of zero")]
+        public void CheckingAttributesOfZero()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking attributes of zero", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 20
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 21
+    testRunner.When("number 0 is checked for multiple attributes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 22
+    testRunner.Then("the answer to know whether is prime or not is false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 23
+    testRunner.And("the answer to know whether is odd or not is false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 24
+    testRunner.And("the square root of the number is 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Handling negative numbers")]
+        [Xunit.TraitAttribute("FeatureTitle", "Number Attribute")]
+        [Xunit.TraitAttribute("Description", "Handling negative numbers")]
+        public void HandlingNegativeNumbers()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Handling negative numbers", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 26
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 27
+    testRunner.When("number -1 is checked for multiple attributes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 28
+    testRunner.Then("an error \"Number must be non-negative\" is returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Checking a very large number")]
+        [Xunit.TraitAttribute("FeatureTitle", "Number Attribute")]
+        [Xunit.TraitAttribute("Description", "Checking a very large number")]
+        public void CheckingAVeryLargeNumber()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking a very large number", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 30
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 31
+    testRunner.When("number 100000000 is checked for multiple attributes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 32
+    testRunner.Then("the answer to know whether is prime or not is false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 33
+    testRunner.And("the answer to know whether is odd or not is false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 34
+    testRunner.And("the square root of the number is 10000", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();

@@ -35,8 +35,11 @@ namespace calculator.lib.test.steps
                 var jsonDocument = JsonDocument.Parse(responseBody);
                 var odd = jsonDocument.RootElement.GetProperty("odd").GetBoolean();
                 var prime = jsonDocument.RootElement.GetProperty("prime").GetBoolean();
+                var squareRoot = jsonDocument.RootElement.GetProperty("squareRoot").GetDouble();
+
                 _scenarioContext.Add("isOdd", odd);
                 _scenarioContext.Add("isPrime", prime);
+                _scenarioContext.Add("squareRoot", squareRoot);
             }
         }
 
@@ -52,6 +55,13 @@ namespace calculator.lib.test.steps
         {
             var isOdd = _scenarioContext.Get<bool>("isOdd");
             Assert.Equal(isOdd, isIt);
+        }
+
+        [Then(@"the square root of the number is (.*)")]
+        public void ThenTheSquareRootOfTheNumberIs(double expectedSquareRoot)
+        {
+            var squareRoot = _scenarioContext.Get<double>("squareRoot");
+            Assert.Equal(expectedSquareRoot, squareRoot, precision: 10); // Comparar con 10 decimales
         }
     }
 }
