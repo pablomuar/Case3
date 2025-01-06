@@ -31,11 +31,6 @@ namespace CalculatorAPI.Controllers
         [HttpGet("divide")]
         public ActionResult<double> Divide([FromQuery] double a, [FromQuery] double b)
         {
-            if(b == 0)
-            {
-                return BadRequest("NaN");
-            }
-
             var final_result = Calculator.Divide((int)a, (int)b);
 			return Ok(new { result = final_result });
         }
@@ -50,11 +45,6 @@ namespace CalculatorAPI.Controllers
         [HttpGet("number_attribute")]
         public ActionResult<bool> NumberAttribute([FromQuery] int number)
         {
-            if (number < 0)
-            {
-                return BadRequest("El número no puede ser negativo");
-            }
-
             var is_prime = NumberAttributter.IsPrime(number);
             var is_odd = NumberAttributter.IsOdd(number);
             return Ok(new { odd = is_odd, prime = is_prime});
