@@ -30,14 +30,9 @@ namespace calculator.lib
             return number % 2 != 0;
         }
 
-        public static string SquareRoot(int number)
+        public static double SquareRoot(int number)
         {
-            if (number < 0)
-            {
-                return "Invalid input for square root"; 
-            }
-
-            return Math.Sqrt(number).ToString();
+            return Math.Sqrt(number);
         }
 
     }
