@@ -56,10 +56,11 @@ namespace calculator.lib.test.steps
         }
 
         [Then(@"the square root of the number is (.*)")]
-        public void ThenTheSquareRootOfTheNumberIs(int square)
+        public void ThenTheSquareRootOfTheNumberIs(double expectedSquareRoot)
         {
-            var squareRoot = Math.Sqrt(square);
-            Assert.Equal(squareRoot, square);
+            var actualSquareRoot = Math.Sqrt(expectedSquareRoot); // _currentNumber es el número evaluado
+            Assert.Equal(expectedSquareRoot, actualSquareRoot, precision: 2); // Comparación con 2 decimales de precisión
         }
+
     }
 }
