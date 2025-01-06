@@ -44,18 +44,21 @@ namespace CalculatorAPI.Controllers
         public ActionResult<bool> IsPrime([FromQuery] int number)
         {
             var is_prime = NumberAttributter.IsPrime(number);
-            var square = NumberAttributter.SquareRoot(number);
-            return Ok(new { result = is_prime,
-                            squareRoot = square
-            });
+            return Ok(new { result = is_prime });
         }
 
         [HttpGet("number_attribute")]
         public ActionResult<bool> NumberAttribute([FromQuery] int number)
         {
+            if (number < 0)
+            {
+                return BadRequest("El número no puede ser negativo");
+            }
+
             var is_prime = NumberAttributter.IsPrime(number);
             var is_odd = NumberAttributter.IsOdd(number);
-            return Ok(new { odd = is_odd, prime = is_prime });
+            var squareRoot = NumberAttributter.SquareRoot(number);
+            return Ok(new { odd = is_odd, prime = is_prime, square = squareRoot});
         }
     }
 }
