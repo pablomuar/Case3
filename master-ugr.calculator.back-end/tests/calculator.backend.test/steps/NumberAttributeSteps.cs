@@ -54,5 +54,12 @@ namespace calculator.lib.test.steps
             var isOdd = _scenarioContext.Get<bool>("isOdd");
             Assert.Equal(isOdd, isIt);
         }
+
+        [Then(@"the square root of the number is (.*)")]
+        public void ThenTheSquareRootOfTheNumberIs(int square)
+        {
+            var squareRoot = Math.Sqrt(square);
+            Assert.Equal(squareRoot, square);
+        }
     }
 }
