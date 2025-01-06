@@ -31,10 +31,11 @@ namespace calculator.lib.test.steps
                 var response = client.GetAsync(api_call).Result;
                 response.EnsureSuccessStatusCode();
                 var responseBody = response.Content.ReadAsStringAsync().Result;
+                Console.WriteLine($"API Response: {responseBody}");
                 var jsonDocument = JsonDocument.Parse(responseBody);
                 var odd = jsonDocument.RootElement.GetProperty("odd").GetBoolean();
                 var prime = jsonDocument.RootElement.GetProperty("prime").GetBoolean();
-                var square = jsonDocument.RootElement.GetProperty("sqrt").GetDouble();
+                var square = jsonDocument.RootElement.GetProperty("squeare").GetDouble();
 
                 _scenarioContext.Add("isOdd", odd);
                 _scenarioContext.Add("isPrime", prime);
