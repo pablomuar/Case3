@@ -34,7 +34,5 @@ namespace calculator.lib
         {
             return Math.Round(Math.Sqrt(number), 2);
         }
-
-
     }
 }
