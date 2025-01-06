@@ -37,4 +37,5 @@ namespace calculator.lib.test.steps
             Assert.Equal(expected, isOdd);
         }
     }
+
 }
