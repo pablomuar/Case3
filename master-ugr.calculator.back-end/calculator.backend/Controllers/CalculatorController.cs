@@ -31,8 +31,8 @@ namespace CalculatorAPI.Controllers
         [HttpGet("divide")]
         public ActionResult<double> Divide([FromQuery] double a, [FromQuery] double b)
         {
-            var final_result = Calculator.Divide((int)a, (int)b);
-            return Ok(new { result = final_result });
+			var final_result = Calculator.Divide((int)a, (int)b);
+			return Ok(new { result = final_result });
         }
 
         [HttpGet("is_prime")]
