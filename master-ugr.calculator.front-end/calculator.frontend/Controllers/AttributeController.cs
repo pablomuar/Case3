@@ -40,7 +40,7 @@ namespace calculator.frontend.Controllers
                 // Leer los valores de la respuesta JSON
                 var prime = json["prime"];
                 var odd = json["odd"];
-                var square = json["squareRoot"]; // Leer la raíz cuadrada
+                var square = json["sqrt"]; // Leer la raíz cuadrada
 
                 if (prime != null)
                 {
