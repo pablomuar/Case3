@@ -40,7 +40,7 @@ namespace calculator.backend.test
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "Number Attribute", " I want to have a REST API which includes information\r\n about a number.", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "Number Attribute", "  I want to have a REST API which includes information\r\n  about a number.", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,22 +83,23 @@ namespace calculator.backend.test
         [Xunit.SkippableTheoryAttribute(DisplayName="Checking several numbers")]
         [Xunit.TraitAttribute("FeatureTitle", "Number Attribute")]
         [Xunit.TraitAttribute("Description", "Checking several numbers")]
-        [Xunit.InlineDataAttribute("2", "true", "false", new string[0])]
-        [Xunit.InlineDataAttribute("6", "false", "false", new string[0])]
-        [Xunit.InlineDataAttribute("7", "true", "true", new string[0])]
-        [Xunit.InlineDataAttribute("8", "false", "false", new string[0])]
-        [Xunit.InlineDataAttribute("9", "false", "true", new string[0])]
-        [Xunit.InlineDataAttribute("10", "false", "false", new string[0])]
-        public void CheckingSeveralNumbers(string number, string prime, string odd, string[] exampleTags)
+        [Xunit.InlineDataAttribute("2", "true", "false", "1.41", new string[0])]
+        [Xunit.InlineDataAttribute("6", "false", "false", "2.45", new string[0])]
+        [Xunit.InlineDataAttribute("7", "true", "true", "2.65", new string[0])]
+        [Xunit.InlineDataAttribute("8", "false", "false", "2.83", new string[0])]
+        [Xunit.InlineDataAttribute("9", "false", "true", "3.00", new string[0])]
+        [Xunit.InlineDataAttribute("10", "false", "false", "3.16", new string[0])]
+        public void CheckingSeveralNumbers(string number, string prime, string odd, string sqrt, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("number", number);
             argumentsOfScenario.Add("prime", prime);
             argumentsOfScenario.Add("odd", odd);
+            argumentsOfScenario.Add("sqrt", sqrt);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking several numbers", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
- this.ScenarioInitialize(scenarioInfo);
+  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -108,13 +109,16 @@ namespace calculator.backend.test
             {
                 this.ScenarioStart();
 #line 6
- testRunner.When(string.Format("number {0} is checked for multiple attributes", number), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When(string.Format("number {0} is checked for multiple attributes", number), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then(string.Format("the answer to know whether is prime or not is {0}", prime), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then(string.Format("the answer to know whether is prime or not is {0}", prime), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 8
- testRunner.And(string.Format("the answer to know whether is odd or not is {0}", odd), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And(string.Format("the answer to know whether is odd or not is {0}", odd), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 9
+    testRunner.And(string.Format("the square root of the number is {0}", sqrt), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
