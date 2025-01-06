@@ -276,7 +276,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("the second number is 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 40
- testRunner.When("I divide first number by second number", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I divide both numbers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 41
     testRunner.Then("the result should be \"NaN\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
