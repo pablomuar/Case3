@@ -41,7 +41,6 @@ namespace calculator.frontend.Controllers
                 var prime = json["prime"];
                 var odd = json["odd"];
                 var square = json["square"]; // Leer la raíz cuadrada
-
                 if (prime != null)
                 {
                     raw_prime = prime.Value<bool>();

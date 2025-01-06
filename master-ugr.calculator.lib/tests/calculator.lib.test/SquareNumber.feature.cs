@@ -83,17 +83,18 @@ namespace calculator.lib.test
         [Xunit.SkippableTheoryAttribute(DisplayName="Calculate the square root of a number")]
         [Xunit.TraitAttribute("FeatureTitle", "Square Root")]
         [Xunit.TraitAttribute("Description", "Calculate the square root of a number")]
-        [Xunit.InlineDataAttribute("1", "1.0", new string[0])]
-        [Xunit.InlineDataAttribute("4", "2.0", new string[0])]
-        [Xunit.InlineDataAttribute("9", "3.0", new string[0])]
-        [Xunit.InlineDataAttribute("16", "4.0", new string[0])]
-        [Xunit.InlineDataAttribute("25", "5.0", new string[0])]
-        public void CalculateTheSquareRootOfANumber(string number, string result, string[] exampleTags)
+        [Xunit.InlineDataAttribute("1", "1", new string[0])]
+        [Xunit.InlineDataAttribute("2", "1.41", new string[0])]
+        [Xunit.InlineDataAttribute("4", "2", new string[0])]
+        [Xunit.InlineDataAttribute("9", "3", new string[0])]
+        [Xunit.InlineDataAttribute("15", "3.87", new string[0])]
+        [Xunit.InlineDataAttribute("16", "4", new string[0])]
+        public void CalculateTheSquareRootOfANumber(string number, string sqrt, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("number", number);
-            argumentsOfScenario.Add("result", result);
+            argumentsOfScenario.Add("sqrt", sqrt);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calculate the square root of a number", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 3
 this.ScenarioInitialize(scenarioInfo);
@@ -106,13 +107,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 4
-    testRunner.Given(string.Format("a number {0}", number), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given(string.Format("a square-root number {0}", number), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
-    testRunner.When("I calculate the square root", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I calculate the square root of the number", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 6
-    testRunner.Then(string.Format("the result should be {0}", result), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then(string.Format("the square root result should be {0}", sqrt), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

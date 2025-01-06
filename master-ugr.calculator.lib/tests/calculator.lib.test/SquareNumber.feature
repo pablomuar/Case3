@@ -1,13 +1,14 @@
 Feature: Square Root
 
 Scenario Outline: Calculate the square root of a number
-    Given a number <number>
-    When I calculate the square root
-    Then the result should be <result>
-    Examples: 
-    | number | result  |
-    | 1      | 1.0     |
-    | 4      | 2.0     |
-    | 9      | 3.0     |
-    | 16     | 4.0     |
-    | 25     | 5.0     |
+    Given a square-root number <number>
+    When I calculate the square root of the number
+    Then the square root result should be <sqrt>
+    Examples:
+    | number | sqrt  |
+    | 1      | 1     |
+    | 2      | 1.41  |
+    | 4      | 2     |
+    | 9      | 3     |
+    | 15     | 3.87  |
+    | 16     | 4     |
