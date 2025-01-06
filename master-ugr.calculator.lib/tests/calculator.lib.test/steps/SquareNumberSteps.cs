@@ -14,13 +14,13 @@ namespace calculator.lib.test.steps
             _scenarioContext = scenarioContext;
         }
 
-        [Given(@"a number (.*)")]
+        [Given(@"a square-root number (\d+)")]
         public void GivenANumber(int number)
         {
             _scenarioContext.Add("number", number);
         }
 
-        [When(@"I calculate its square root")]
+        [When(@"I calculate the square root of the number")]
         public void WhenICalculateItsSquareRoot()
         {
             var number = _scenarioContext.Get<int>("number");
@@ -28,7 +28,7 @@ namespace calculator.lib.test.steps
             _scenarioContext.Add("sqrt", sqrt);
         }
 
-        [Then(@"the result should be (.*)")]
+        [Then(@"the square root result should be (.*)")]
         public void ThenTheResultShouldBe(double expectedSqrt)
         {
             var actualSqrt = _scenarioContext.Get<double>("sqrt");
