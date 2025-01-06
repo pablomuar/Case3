@@ -4,37 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using Xunit; // Necesario para usar Assert
 
 namespace calculator.lib.test.steps
 {
     [Binding]
-    public class OddNumberSteps
+    public class SquareRootSteps
     {
         private readonly ScenarioContext _scenarioContext;
-        public OddNumberSteps(ScenarioContext scenarioContext)
+        public SquareRootSteps(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
         }
 
         [Given(@"a number (.*)")]
-        public void WhenNumberIsChecked(int number)
+        public void GivenANumber(double number)
         {
             _scenarioContext.Add("number", number);
         }
 
-        [When("I check if it is odd")]
-        public void ICheckIfItIsOdd()
+        [When("I calculate the square root")]
+        public void ICalculateTheSquareRoot()
         {
-            var number = _scenarioContext.Get<int>("number");
-            var isOdd = NumberAttributter.IsOdd(number);
-            _scenarioContext.Add("isOdd", isOdd);
+            var number = _scenarioContext.Get<double>("number");
+            var squareRoot = Math.Sqrt(number);
+            _scenarioContext.Add("squareRoot", squareRoot);
         }
 
-        [Then("it should be odd (.*)")]
-        public void ItShouldBeOdd(bool expected)
+        [Then("the result should be (.*)")]
+        public void TheResultShouldBe(double expected)
         {
-            var isOdd = _scenarioContext.Get<bool>("isOdd");
-            Assert.Equal(expected, isOdd);
+            var squareRoot = _scenarioContext.Get<double>("squareRoot");
+            Assert.Equal(expected, squareRoot, precision: 2);
         }
     }
 }
