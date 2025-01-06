@@ -60,7 +60,7 @@ namespace calculator.lib.test.steps
         [Then(@"the square root of the number is (.*)")]
         public void ThenTheSquareRootOfTheNumberIs(double expectedSquareRoot)
         {
-            var currentNumber = _scenarioContext.Get<double>("square"); // Obtiene el número almacenado
+            var currentNumber = _scenarioContext.Get<double>("SquareRoot"); // Obtiene el número almacenado
             var actualSquareRoot = Math.Round(Math.Sqrt(currentNumber), 2); // Calcula y redondea la raíz cuadrada
             Assert.Equal(expectedSquareRoot, actualSquareRoot);
         }
