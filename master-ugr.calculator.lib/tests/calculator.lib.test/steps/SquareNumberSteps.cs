@@ -24,14 +24,14 @@ namespace calculator.lib.test.steps
         public void WhenICalculateItsSquareRoot()
         {
             var number = _scenarioContext.Get<int>("number");
-            var sqrt = Math.Round(Math.Sqrt(number), 2); // Calcula y redondea a dos decimales
-            _scenarioContext.Add("sqrt", sqrt);
+            var sqrt = NumberAttributter.SquareRoot(number);
+            _scenarioContext.Add("SquareRoot", sqrt);
         }
 
         [Then(@"the square root result should be (.*)")]
         public void ThenTheResultShouldBe(double expectedSqrt)
         {
-            var actualSqrt = _scenarioContext.Get<double>("sqrt");
+            var actualSqrt = _scenarioContext.Get<double>("SquareRoot");
             Assert.Equal(expectedSqrt, actualSqrt);
         }
     }
