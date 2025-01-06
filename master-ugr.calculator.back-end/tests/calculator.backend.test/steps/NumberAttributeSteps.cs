@@ -22,7 +22,6 @@ namespace calculator.lib.test.steps
         }
         [When("number (.*) is checked for multiple attributes")]
         public void NumberIsCheckedForMultipleAttributes(int number)
-
         {
             using (var client = new HttpClient())
             {
@@ -35,11 +34,14 @@ namespace calculator.lib.test.steps
                 var jsonDocument = JsonDocument.Parse(responseBody);
                 var odd = jsonDocument.RootElement.GetProperty("odd").GetBoolean();
                 var prime = jsonDocument.RootElement.GetProperty("prime").GetBoolean();
+                var square = jsonDocument.RootElement.GetProperty("square").GetDouble();
 
                 _scenarioContext.Add("isOdd", odd);
                 _scenarioContext.Add("isPrime", prime);
+                _scenarioContext.Add("square", square);
             }
         }
+
 
         [Then(@"the answer to know whether is prime or not is (.*)")]
         public void ThenTheAnswerToKnowWhetherIsPrimeOrNotIsTrue(bool isIt)
@@ -58,9 +60,12 @@ namespace calculator.lib.test.steps
         [Then(@"the square root of the number is (.*)")]
         public void ThenTheSquareRootOfTheNumberIs(double expectedSquareRoot)
         {
-            var actualSquareRoot = Math.Sqrt(expectedSquareRoot); // _currentNumber es el número evaluado
-            Assert.Equal(expectedSquareRoot, actualSquareRoot, precision: 2); // Comparación con 2 decimales de precisión
+            var currentNumber = _scenarioContext.Get<int>("square"); // Obtiene el número almacenado
+            var actualSquareRoot = Math.Round(Math.Sqrt(currentNumber), 2); // Calcula y redondea la raíz cuadrada
+            Assert.Equal(expectedSquareRoot, actualSquareRoot);
         }
+
+
 
     }
 }
