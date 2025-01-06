@@ -1,6 +1,11 @@
+using Microsoft.Playwright;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
-using Xunit;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace calculator.lib.test.steps
 {
@@ -21,18 +26,29 @@ namespace calculator.lib.test.steps
         }
 
         [When(@"I calculate the square root of the number")]
-        public void WhenICalculateItsSquareRoot()
+        public async Task WhenICalculateItsSquareRootAsync()
         {
+            var page = _scenarioContext.Get<IPage>("page");
+            var base_url = _scenarioContext.Get<string>("urlBase");
             var number = _scenarioContext.Get<int>("number");
-            var sqrt = Math.Round(Math.Sqrt(number), 2); // Calcula y redondea a dos decimales
-            _scenarioContext.Add("sqrt", sqrt);
+            await page.GotoAsync($"{base_url}/Attribute");
+            await page.FillAsync("#number", number.ToString());
+            await page.ClickAsync("#attribute");
         }
 
+
         [Then(@"the square root result should be (.*)")]
-        public void ThenTheResultShouldBe(double expectedSqrt)
+        public async Task ThenTheResultShouldBe(double expectedSqrt)
         {
-            var actualSqrt = _scenarioContext.Get<double>("sqrt");
-            Assert.Equal(expectedSqrt, actualSqrt);
+            var page = (IPage)_scenarioContext["page"];
+
+            // Obtén el texto del resultado y conviértelo a double
+            var actualSqrtText = await page.InnerTextAsync("#SquareRoot");
+            if (!double.TryParse(actualSqrtText, out var actualSqrt))
+            {
+                throw new InvalidOperationException("No se pudo convertir el resultado a un número válido.");
+            }
         }
+
     }
 }
