@@ -251,14 +251,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Division by 0 shall return NaN")]
+        [Xunit.SkippableFactAttribute(DisplayName="Divide by 0 shall return NaN")]
         [Xunit.TraitAttribute("FeatureTitle", "Calculator")]
-        [Xunit.TraitAttribute("Description", "Division by 0 shall return NaN")]
-        public void DivisionBy0ShallReturnNaN()
+        [Xunit.TraitAttribute("Description", "Divide by 0 shall return NaN")]
+        public void DivideBy0ShallReturnNaN()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Division by 0 shall return NaN", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Divide by 0 shall return NaN", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 37
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -279,41 +279,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("I divide both numbers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 41
- testRunner.Then("the result shall be \"NaN\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Determine if a number is prime and calculate its square root")]
-        [Xunit.TraitAttribute("FeatureTitle", "Calculator")]
-        [Xunit.TraitAttribute("Description", "Determine if a number is prime and calculate its square root")]
-        public void DetermineIfANumberIsPrimeAndCalculateItsSquareRoot()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Determine if a number is prime and calculate its square root", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 43
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 44
-    testRunner.Given("the number is 49", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 45
-    testRunner.When("I check if it is prime and calculate its square root", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 46
-    testRunner.Then("the result should indicate it is not prime", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 47
-    testRunner.And("the square root should be 7", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("the result should be \"NaN\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

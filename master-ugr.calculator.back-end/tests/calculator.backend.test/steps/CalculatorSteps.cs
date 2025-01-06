@@ -1,8 +1,13 @@
 ﻿using System;
-using System.Net.Http;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
-using Xunit; // Asegúrate de tener esta referencia para usar Assert
+using TechTalk.SpecFlow.CommonModels;
+using static System.Net.WebRequestMethods;
 
 namespace calculator.lib.test.steps
 {
@@ -27,12 +32,10 @@ namespace calculator.lib.test.steps
         {
             _scenarioContext.Add("secondNumber", secondNumber);
         }
-
         private void ApiCall(string operation)
         {
             using (var client = new HttpClient())
             {
-                // Asegúrate de que "urlBase" esté definido en el contexto
                 var urlBase = _scenarioContext.Get<string>("urlBase");
                 var firstNumber = _scenarioContext.Get<int>("firstNumber");
                 var secondNumber = _scenarioContext.Get<int>("secondNumber");
@@ -41,35 +44,32 @@ namespace calculator.lib.test.steps
                 var response = client.GetAsync(api_call).Result;
                 response.EnsureSuccessStatusCode();
                 var responseBody = response.Content.ReadAsStringAsync().Result;
+                var jsonDocument = JsonDocument.Parse(responseBody);
 
-                // Manejar el caso de NaN
-                if (responseBody.Contains("NaN"))
+                var resultElement = jsonDocument.RootElement.GetProperty("result");
+
+                double result;
+                if (resultElement.ValueKind == JsonValueKind.String && resultElement.GetString() == "NaN")
                 {
-                    _scenarioContext.Add("result", "NaN");
+                    result = double.NaN;
                 }
-                else
+                else if (!resultElement.TryGetDouble(out result))
                 {
-                    var jsonDocument = JsonDocument.Parse(responseBody);
-                    var result = jsonDocument.RootElement.GetProperty("result").GetDouble();
-                    _scenarioContext.Add("result", result);
+                    throw new InvalidOperationException("Result is not a valid number");
                 }
+
+                _scenarioContext.Add("result", result);
             }
         }
 
         [When(@"the two numbers are added")]
+
         public void WhenTheTwoNumbersAreAdded()
         {
             ApiCall("add");
         }
-
         [When(@"I divide first number by second number")]
         public void WhenIDivideFirstNumberBySecondNumber()
-        {
-            ApiCall("divide");
-        }
-
-        [When(@"I divide both numbers")] // Agregado para resolver el paso faltante
-        public void WhenIDivideBothNumbers()
         {
             ApiCall("divide");
         }
@@ -86,22 +86,35 @@ namespace calculator.lib.test.steps
             ApiCall("subtract");
         }
 
-        // Definiciones de pasos para valores numéricos específicos
-        [Then(@"the result should be (-?\d+(\.\d+)?)")]
-        [Then(@"the result shall be (-?\d+(\.\d+)?)")]
-        [Then(@"the result is (-?\d+(\.\d+)?)")]
+        [Then(@"the result should be (.*)")]
+        [Then(@"the result shall be (.*)")]
+        [Then(@"the result is (.*)")]
         public void ThenTheResultShouldBe(double expectedResult)
         {
             var result = _scenarioContext.Get<double>("result");
             Assert.Equal(expectedResult, result);
         }
 
-        // Definición específica para NaN
-        [Then(@"the result shall be NaN")]
-        public void ThenTheResultShallBeNaN()
+        //DECLARAMOS LOS METODOS PARA LOS PASOS DE LAS PRUEBAS
+        [When(@"I divide both numbers")]
+        public void WhenIDivideBothNumbers()
         {
-            var result = _scenarioContext.Get<string>("result");
-            Assert.Equal("NaN", result);
+            ApiCall("divide");
+        }
+
+        [Then(@"the result should be ""(.*)""")]
+        public void ThenTheResultShouldBeSpecialValue(string expectedResult)
+        {
+            var result = _scenarioContext.Get<double>("result");
+
+            if (expectedResult == "NaN")
+            {
+                Assert.True(double.IsNaN(result), "Expected result to be NaN, but it was not.");
+            }
+            else
+            {
+                Assert.Fail($"Unhandled special value: {expectedResult}");
+            }
         }
     }
 }
