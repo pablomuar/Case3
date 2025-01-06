@@ -68,6 +68,14 @@ namespace calculator.frontend.tests.steps
 			await page.ClickAsync("#calculateButton");
 		}
 
+		[When(@"I divide both numbers")]
+		public async Task WhenIDivideBothNumbers()
+		{
+            var page = (IPage)_scenarioContext["page"];
+            await page.SelectOptionAsync("#operation", "Divide");
+            await page.ClickAsync("#calculateButton");
+        }
+
         //DECLARACIÓN DE LOS PASOS DE LOS ESCENARIOS
         [Then(@"the result should be (.*)")]
 		[Then(@"the result is (.*)")]
