@@ -37,5 +37,5 @@ Scenario: Division by zero
 Scenario: Divide by 0 shall return NaN
 	Given the first number is 30
 	And the second number is 0
-	When I divide first number by second number
+	When I divide both numbers
     Then the result should be "NaN"
