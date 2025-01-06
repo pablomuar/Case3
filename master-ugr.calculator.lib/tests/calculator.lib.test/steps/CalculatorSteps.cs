@@ -73,7 +73,17 @@ namespace calculator.lib.test.steps
             Assert.Equal(result, expectedResult);
         }
 
-		[Then(@"the result should be ""(.*)""")]
+        //DECLARACION DE PASOS PARA LAS PRUEBAS DEL NUEVO ESCENARIO
+        [When(@"I divide both numbers")]
+        public void WhenIDivideBothNumbers()
+        {
+            var firstNumber = _scenarioContext.Get<int>("firstNumber");
+            var secondNumber = _scenarioContext.Get<int>("secondNumber");
+            var result = Calculator.Divide(firstNumber, secondNumber);
+            _scenarioContext.Add("result", result);
+        }
+
+        [Then(@"the result should be ""(.*)""")]
 		public void ThenTheResultShouldBeSpecialValue(string expectedResult)
 		{
 			var result = _scenarioContext.Get<double>("result");
