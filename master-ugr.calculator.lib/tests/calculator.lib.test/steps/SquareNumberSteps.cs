@@ -1,25 +1,30 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using Xunit;
 
 namespace calculator.lib.test.steps
 {
     [Binding]
-    public class SquareNumberSteps
+    public class SquareRootSteps
     {
         private readonly ScenarioContext _scenarioContext;
-        public SquareNumberSteps(ScenarioContext scenarioContext)
+
+        public SquareRootSteps(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
         }
 
-        [When(@"I calculate the square root of number (.*)")]
-        public void WhenICalculateTheSquareRootOfNumber(int number)
+        [Given(@"a number (.*)")]
+        public void GivenANumber(int number)
         {
-            var sqrt = Math.Round(Math.Sqrt(number), 2);
+            _scenarioContext.Add("number", number);
+        }
+
+        [When(@"I calculate its square root")]
+        public void WhenICalculateItsSquareRoot()
+        {
+            var number = _scenarioContext.Get<int>("number");
+            var sqrt = Math.Round(Math.Sqrt(number), 2); // Calcula y redondea a dos decimales
             _scenarioContext.Add("sqrt", sqrt);
         }
 
