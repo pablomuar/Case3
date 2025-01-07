@@ -6,7 +6,7 @@ Feature: Number Attribute
     When number <number> is checked for multiple attributes
     Then the answer to know whether is prime or not is <prime>
     And the answer to know whether is odd or not is <odd>
-    And the square root is <sqrt>
+    And the square root of the number is <sqrt>
 Examples:
     | number | prime  | odd   | sqrt  |
     | 2      | true   | false | 1.41  |
