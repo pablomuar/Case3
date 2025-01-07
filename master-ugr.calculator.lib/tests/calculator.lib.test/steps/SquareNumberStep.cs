@@ -31,7 +31,7 @@ namespace calculator.lib.test.steps
             _scenarioContext.Add("squareRoot", squareRoot);
         }
 
-        [Then("the result should be (.*)")]
+        [Then(@"the calculated square root should be (.*)")]
         public void ThenTheResultShouldBe(string expected)
         {
             var squareRoot = _scenarioContext.Get<double?>("squareRoot");

@@ -3,8 +3,7 @@ Feature: Square Root Calculation
 Scenario Outline: Calculate the square root of a number
     Given a number to calculate square root <number>
     When I calculate the square root
-    Then the result should be <result>
-
+    Then the calculated square root should be <result>
     Examples:
     | number | result |
     | 4      | 2      |
