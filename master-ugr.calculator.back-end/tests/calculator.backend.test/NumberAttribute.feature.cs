@@ -118,7 +118,7 @@ namespace calculator.backend.test
     testRunner.And(string.Format("the answer to know whether is odd or not is {0}", odd), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 9
-    testRunner.And(string.Format("the square root is {0}", sqrt), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And(string.Format("the square root of the number is {0}", sqrt), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
