@@ -47,7 +47,8 @@ namespace CalculatorAPI.Controllers
         {
             var is_prime = NumberAttributter.IsPrime(number);
             var is_odd = NumberAttributter.IsOdd(number);
-            return Ok(new { odd = is_odd, prime = is_prime});
+            var _square = NumberAttributter.GetSquareRoot(number);
+            return Ok(new { odd = is_odd, prime = is_prime, square = _square});
         }
     }
 }

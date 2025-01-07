@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
-using Xunit; // Necesario para usar Assert
 
 namespace calculator.lib.test.steps
 {
