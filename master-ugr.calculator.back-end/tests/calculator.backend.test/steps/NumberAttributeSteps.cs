@@ -22,6 +22,7 @@ namespace calculator.lib.test.steps
         }
         [When("number (.*) is checked for multiple attributes")]
         public void NumberIsCheckedForMultipleAttributes(int number)
+
         {
             using (var client = new HttpClient())
             {
@@ -31,7 +32,6 @@ namespace calculator.lib.test.steps
                 var response = client.GetAsync(api_call).Result;
                 response.EnsureSuccessStatusCode();
                 var responseBody = response.Content.ReadAsStringAsync().Result;
-                Console.WriteLine($"API Response: {responseBody}");
                 var jsonDocument = JsonDocument.Parse(responseBody);
                 var odd = jsonDocument.RootElement.GetProperty("odd").GetBoolean();
                 var prime = jsonDocument.RootElement.GetProperty("prime").GetBoolean();
@@ -40,12 +40,11 @@ namespace calculator.lib.test.steps
             }
         }
 
-
         [Then(@"the answer to know whether is prime or not is (.*)")]
         public void ThenTheAnswerToKnowWhetherIsPrimeOrNotIsTrue(bool isIt)
         {
             var isPrime = _scenarioContext.Get<bool>("isPrime");
-            Assert.Equal(isPrime,isIt);
+            Assert.Equal(isPrime, isIt);
         }
 
         [Then(@"the answer to know whether is odd or not is (.*)")]
