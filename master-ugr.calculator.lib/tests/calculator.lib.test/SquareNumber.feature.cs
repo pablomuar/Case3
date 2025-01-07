@@ -106,7 +106,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 4
-    testRunner.Given(string.Format("a number {0}", number), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given(string.Format("a number to calculate square root {0}", number), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
     testRunner.When("I calculate the square root", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

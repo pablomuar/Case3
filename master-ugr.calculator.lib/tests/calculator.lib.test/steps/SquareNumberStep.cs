@@ -17,7 +17,7 @@ namespace calculator.lib.test.steps
             _scenarioContext = scenarioContext;
         }
 
-        [Given(@"a number (.*)")]
+        [Given(@"a number to calculate square root (.*)")]
         public void GivenANumber(int number)
         {
             _scenarioContext.Add("number", number);
