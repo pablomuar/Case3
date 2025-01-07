@@ -19,7 +19,7 @@ namespace calculator.frontend.Controllers
             bool? raw_odd = null;
             var clientHandler = new HttpClientHandler();
             var client = new HttpClient(clientHandler);
-            var url = $"{base_url}/api/Calculator/number_attribute?number={number}";
+            var url = $"{base_url}/api/Calculator/is_prime?number={number}";
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -55,7 +55,7 @@ namespace calculator.frontend.Controllers
         [HttpPost]
         public ActionResult Index(string number)
         {
-            var result = ExecuteOperation(number);
+¡            var result = ExecuteOperation(number);
             ViewBag.IsPrime = result.isPrime;
             ViewBag.IsOdd = result.isOdd;
             ViewBag.SquareRoot = result.squareRoot;
