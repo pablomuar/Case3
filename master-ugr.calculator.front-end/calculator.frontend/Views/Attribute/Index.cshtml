@@ -15,10 +15,11 @@
 </div>
 }
 
-@if (ViewBag.IsPrime != null && ViewBag.IsOdd != null)
+@if (ViewBag.IsPrime != null && ViewBag.IsOdd != null && ViewBag.SquareRoot != null)
 {
 <div>
     <h3>Is Prime:</h3><div id="isPrime"><h4>@ViewBag.IsPrime</h4></div>
     <h3>Is Odd:</h3><div id="isOdd"><h4>@ViewBag.IsOdd</h4></div>
+    <h3>Square Root:</h3><div id="squareRoot"><h4>@ViewBag.SquareRoot</h4></div>
 </div>
 }
