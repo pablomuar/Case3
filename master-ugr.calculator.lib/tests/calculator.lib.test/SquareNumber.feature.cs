@@ -30,8 +30,7 @@ namespace calculator.lib.test
         
 #line 1 "SquareNumber.feature"
 #line hidden
-        
-        public SquareRootCalculationFeature(SquareRootCalculationFeature.FixtureData fixtureData, calculator_lib_test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public SquareRootCalculationFeature(SquareRootCalculationFeature.FixtureData fixtureData, calculator_frontend_tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
