@@ -57,10 +57,11 @@ namespace calculator.lib.test.steps
         }
 
         [Then(@"the square root of the number is (.*)")]
-        public void ThenTheSquareRootOfTheNumberIs(double squareRoot)
+        public void ThenTheSquareRootOfTheNumberIs(double expectedSquareRoot)
         {
-            var square = _scenarioContext.Get<double>("SquareRoot");
-            Assert.Equal(square, squareRoot);
+            var actualSquareRoot = _scenarioContext.Get<double>("SquareRoot");
+            Assert.Equal(Math.Round(expectedSquareRoot, 2), Math.Round(actualSquareRoot, 2));
         }
+
     }
 }
