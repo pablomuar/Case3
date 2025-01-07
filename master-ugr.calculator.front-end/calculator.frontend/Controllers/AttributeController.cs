@@ -9,86 +9,44 @@ namespace calculator.frontend.Controllers
         {
             return View();
         }
-
-        private string base_url =
-            Environment.GetEnvironmentVariable("CALCULATOR_BACKEND_URL") ??
-            "https://master-ugr-ci-backend-uat.azurewebsites.net";
-
-        const string api = "api/Calculator";
-
-        private (string isPrime, string isOdd, string squareRoot) ExecuteOperation(string number)
+        const string base_url = "https://master-ugr-ci-backend-uat.azurewebsites.net";
+        private string ExecuteOperation(string number)
         {
-            bool? raw_prime = null;
-            bool? raw_odd = null;
-            double? raw_squareRoot = null;
-
+            bool? result = null;
             var clientHandler = new HttpClientHandler();
             var client = new HttpClient(clientHandler);
-            var url = $"{base_url}/api/Calculator/number_attribute?number={number}";
+            var url = $"{base_url}/api/Calculator/is_prime?number={number}";
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
                 RequestUri = new Uri(url),
             };
-
             using (var response = client.Send(request))
             {
                 response.EnsureSuccessStatusCode();
                 var body = response.Content.ReadAsStringAsync().Result;
                 var json = JObject.Parse(body);
-
-                // Leer los valores de la respuesta JSON
-                var prime = json["prime"];
-                var odd = json["odd"];
-                var square = json["square"]; // Leer la raíz cuadrada
-
-                if (prime != null)
+                var result_json = json["result"];
+                if (result_json != null)
                 {
-                    raw_prime = prime.Value<bool>();
-                }
-                if (odd != null)
-                {
-                    raw_odd = odd.Value<bool>();
-                }
-                if (square != null)
-                {
-                    raw_squareRoot = square.Value<double>();
+                    result = result_json.Value<bool>();
                 }
             }
-
-            // Formatear los valores para el resultado final
-            var isPrime = "unknown";
-            if (raw_prime != null && raw_prime.Value)
+            var yesOrNo = "unknown";
+            if (result != null && result.Value)
             {
-                isPrime = "Yes";
+                yesOrNo = "Yes";
             }
-            else if (raw_prime != null && !raw_prime.Value)
+            else if (result != null && !result.Value)
             {
-                isPrime = "No";
+                yesOrNo = "No";
             }
-
-            var isOdd = "unknown";
-            if (raw_odd != null && raw_odd.Value)
-            {
-                isOdd = "Yes";
-            }
-            else if (raw_odd != null && !raw_odd.Value)
-            {
-                isOdd = "No";
-            }
-
-            var squareRoot = raw_squareRoot != null ? raw_squareRoot.Value.ToString("F2") : "unknown"; // Formatear a 2 decimales
-
-            return (isPrime, isOdd, squareRoot);
+            return yesOrNo;
         }
-
         [HttpPost]
         public ActionResult Index(string number)
         {
-            var result = ExecuteOperation(number);
-            ViewBag.IsPrime = result.isPrime;
-            ViewBag.IsOdd = result.isOdd;
-            ViewBag.SquareRoot = result.squareRoot; // Agregar la raíz cuadrada al ViewBag
+            ViewBag.IsPrime = ExecuteOperation(number);
             return View();
         }
     }
