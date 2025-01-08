@@ -47,7 +47,7 @@ namespace calculator.lib.test.steps
             }
         }
 
-        [Then(@"the square root of the number is (.*)")]
+        [Then(@"the calculated square root should be (.*)")]
         public async Task ThenTheSquareRootOfTheNumberIs(double expectedSquareRoot)
         {
             var squareRoot = _scenarioContext.Get<double>("SquareRoot");
