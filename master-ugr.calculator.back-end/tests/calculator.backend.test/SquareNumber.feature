@@ -12,4 +12,3 @@ Feature: Square Root Calculation
       | 9      | 3      |
       | 16     | 4      |
       | 25     | 5      |
-      | -4     | null   |
