@@ -37,7 +37,7 @@ namespace calculator.frontend.Controllers
                 var json = JObject.Parse(body);
                 var prime = json["prime"];
                 var odd = json["odd"];
-                var squareRoot = json["squareRoot"];
+                var squareRoot = json["square"];
 
                 if (prime != null)
                 {
