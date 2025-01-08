@@ -31,7 +31,7 @@ namespace CalculatorAPI.Controllers
         [HttpGet("divide")]
         public ActionResult<double> Divide([FromQuery] double a, [FromQuery] double b)
         {
-			var final_result = Calculator.Divide((int)a, (int)b);
+            var final_result = Calculator.Divide((int)a, (int)b);
 			return Ok(new { result = final_result });
         }
 
@@ -47,7 +47,8 @@ namespace CalculatorAPI.Controllers
         {
             var is_prime = NumberAttributter.IsPrime(number);
             var is_odd = NumberAttributter.IsOdd(number);
-            return Ok(new { odd = is_odd, prime = is_prime });
+            var _square = NumberAttributter.GetSquareRoot(number);
+            return Ok(new { odd = is_odd, prime = is_prime, square = _square});
         }
     }
 }

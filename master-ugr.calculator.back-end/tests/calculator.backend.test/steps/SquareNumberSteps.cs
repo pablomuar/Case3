@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -12,20 +12,27 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace calculator.lib.test.steps
 {
     [Binding]
-    public class NumberAttributeSteps
+    public class SquareNumberSteps
     {
         private readonly ScenarioContext _scenarioContext;
 
-        public NumberAttributeSteps(ScenarioContext scenarioContext)
+        public SquareNumberSteps(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
         }
-        [When("number (.*) is checked for multiple attributes")]
-        public void NumberIsCheckedForMultipleAttributes(int number)
 
+        [Given(@"a number to calculate square root (.*)")]
+        public void GivenANumberToCalculateSquareRoot(int number)
+        {
+            _scenarioContext.Add("number", number);
+        }
+
+        [When(@"I calculate the square root")]
+        public void WhenICalculateTheSquareRoot()
         {
             using (var client = new HttpClient())
             {
+                var number = _scenarioContext.Get<int>("number");
                 var urlBase = _scenarioContext.Get<string>("urlBase");
                 var url = $"{urlBase}api/Calculator/";
                 var api_call = $"{url}number_attribute?number={number}";
@@ -36,31 +43,16 @@ namespace calculator.lib.test.steps
                 var odd = jsonDocument.RootElement.GetProperty("odd").GetBoolean();
                 var prime = jsonDocument.RootElement.GetProperty("prime").GetBoolean();
                 var square = jsonDocument.RootElement.GetProperty("square").GetDouble();
-                _scenarioContext.Add("isOdd", odd);
-                _scenarioContext.Add("isPrime", prime);
                 _scenarioContext.Add("SquareRoot", square);
             }
         }
 
-        [Then(@"the answer to know whether is prime or not is (.*)")]
-        public void ThenTheAnswerToKnowWhetherIsPrimeOrNotIsTrue(bool isIt)
+        [Then(@"the calculated square root should be (.*)")]
+        public async Task ThenTheSquareRootOfTheNumberIs(double expectedSquareRoot)
         {
-            var isPrime = _scenarioContext.Get<bool>("isPrime");
-            Assert.Equal(isPrime, isIt);
+            var squareRoot = _scenarioContext.Get<double>("SquareRoot");
+            Assert.Equal(squareRoot, expectedSquareRoot);
         }
 
-        [Then(@"the answer to know whether is odd or not is (.*)")]
-        public void ThenTheAnswerToKnowWhetherIsOddOrNotIsTrue(bool isIt)
-        {
-            var isOdd = _scenarioContext.Get<bool>("isOdd");
-            Assert.Equal(isOdd, isIt);
-        }
-
-        [Then(@"the square root of the number is (.*)")]
-        public void ThenTheSquareRootOfTheNumberIs(double expectedSquareRoot)
-        {
-            var actualSquareRoot = _scenarioContext.Get<double>("SquareRoot");
-            Assert.Equal(Math.Round(expectedSquareRoot, 2), Math.Round(actualSquareRoot, 2));
-        }
     }
 }

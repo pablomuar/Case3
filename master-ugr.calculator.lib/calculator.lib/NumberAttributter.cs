@@ -29,5 +29,14 @@ namespace calculator.lib
         {
             return number % 2 != 0;
         }
+        
+        public static double? GetSquareRoot(int number)
+        {
+            if (number < 0)
+            {
+                return null; // O manejar el caso de números negativos según los requisitos
+            }
+            return Math.Sqrt(number);
+        }
     }
 }
