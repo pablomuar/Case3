@@ -43,12 +43,25 @@ namespace CalculatorAPI.Controllers
         }
 
         [HttpGet("number_attribute")]
-        public ActionResult<bool> NumberAttribute([FromQuery] int number)
+        public ActionResult NumberAttribute([FromQuery] int number)
         {
-            var is_prime = NumberAttributter.IsPrime(number);
-            var is_odd = NumberAttributter.IsOdd(number);
-            var _square = NumberAttributter.GetSquareRoot(number);
-            return Ok(new { odd = is_odd, prime = is_prime, square = _square});
+            try
+            {
+                var is_prime = NumberAttributter.IsPrime(number);
+                var is_odd = NumberAttributter.IsOdd(number);
+                var _square = NumberAttributter.GetSquareRoot(number);
+
+                return Ok(new { odd = is_odd, prime = is_prime, square = _square });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Error inesperado: {ex.Message}" });
+            }
         }
+
     }
 }
