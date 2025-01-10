@@ -5,68 +5,74 @@ namespace calculator.frontend.Controllers
 {
     public class AttributeController : Controller
     {
+        private readonly string _baseUrl =
+            Environment.GetEnvironmentVariable("CALCULATOR_BACKEND_URL") ??
+            "https://master-ugr-ci-backend-uat.azurewebsites.net";
+
         public IActionResult Index()
         {
             return View();
         }
 
-        private string base_url =
-            Environment.GetEnvironmentVariable("CALCULATOR_BACKEND_URL") ??
-            "https://master-ugr-ci-backend-uat.azurewebsites.net";
-        const string api = "api/Calculator";
-
-        private (string isPrime, string isOdd, string squareRoot) ExecuteOperation(string number)
+        private (bool isError, string isPrime, string isOdd, string squareRoot, string errorMessage) ExecuteOperation(string number)
         {
-            bool? raw_prime = null;
-            bool? raw_odd = null;
-            double? raw_squareRoot = null;
-
-            var clientHandler = new HttpClientHandler();
-            var client = new HttpClient(clientHandler);
-            var url = $"{base_url}/api/Calculator/number_attribute?number={number}";
-            var request = new HttpRequestMessage
+            try
             {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(url),
-            };
+                using var client = new HttpClient();
+                var url = $"{_baseUrl}/api/Calculator/number_attribute?number={number}";
+                var response = client.GetAsync(url).Result;
 
-            using (var response = client.Send(request))
-            {
-                response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorMessage = response.Content.ReadAsStringAsync().Result;
+                    return (true, "Error", "Error", "Error", errorMessage);
+                }
+
                 var body = response.Content.ReadAsStringAsync().Result;
                 var json = JObject.Parse(body);
-                var prime = json["prime"];
-                var odd = json["odd"];
-                var squareRoot = json["square"];
 
-                if (prime != null)
-                {
-                    raw_prime = prime.Value<bool>();
-                }
-                if (odd != null)
-                {
-                    raw_odd = odd.Value<bool>();
-                }
-                if (squareRoot != null)
-                {
-                    raw_squareRoot = squareRoot.Value<double?>();
-                }
+                var isPrime = json["prime"]?.Value<bool>() == true ? "Yes" : "No";
+                var isOdd = json["odd"]?.Value<bool>() == true ? "Yes" : "No";
+                var squareRoot = json["square"]?.Value<double?>()?.ToString() ?? "null";
+
+                return (false, isPrime, isOdd, squareRoot, string.Empty);
             }
-
-            var isPrime = raw_prime.HasValue ? (raw_prime.Value ? "Yes" : "No") : "unknown";
-            var isOdd = raw_odd.HasValue ? (raw_odd.Value ? "Yes" : "No") : "unknown";
-            var squareRootResult = raw_squareRoot.HasValue ? raw_squareRoot.Value.ToString() : "null";
-
-            return (isPrime, isOdd, squareRootResult);
+            catch (Exception ex)
+            {
+                return (true, "unknown", "unknown", "unknown", $"Unexpected error: {ex.Message}");
+            }
         }
 
         [HttpPost]
-        public ActionResult Index(string number)
+        public IActionResult Index(string number)
         {
+            // Validación de entrada
+            if (string.IsNullOrWhiteSpace(number) || !int.TryParse(number, out int parsedNumber))
+            {
+                ViewBag.ErrorMessage = "Invalid input. Please enter a valid integer.";
+                return View();
+            }
+
+            if (parsedNumber < 0)
+            {
+                ViewBag.ErrorMessage = "La raiz cuadrada de un numero negativo no se puede calcular.";
+                return View();
+            }
+
+            // Llamar al backend
             var result = ExecuteOperation(number);
+
+            if (result.isError)
+            {
+                ViewBag.ErrorMessage = result.errorMessage;
+                return View();
+            }
+
+            // Mostrar resultados
             ViewBag.IsPrime = result.isPrime;
             ViewBag.IsOdd = result.isOdd;
             ViewBag.SquareRoot = result.squareRoot;
+
             return View();
         }
     }
