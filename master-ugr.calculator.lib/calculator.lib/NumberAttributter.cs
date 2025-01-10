@@ -34,7 +34,7 @@ namespace calculator.lib
         {
             if (number < 0)
             {
-                throw new ArgumentException("La raíz cuadrada de un número negativo no se puede calcular.");
+                throw new ArgumentException("La raiz cuadrada de un numero negativo no se puede calcular.");
             }
             return Math.Sqrt(number);
         }

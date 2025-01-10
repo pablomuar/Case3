@@ -44,7 +44,7 @@ namespace calculator.lib.test.steps
             if (expected == "Exception")
             {
                 Assert.Equal("Exception", result);
-                Assert.Equal("La raíz cuadrada de un número negativo no se puede calcular.", _scenarioContext["exceptionMessage"].ToString());
+                Assert.Equal("La raiz cuadrada de un numero negativo no se puede calcular.", _scenarioContext["exceptionMessage"].ToString());
             }
             else
             {
