@@ -55,7 +55,7 @@ namespace calculator.frontend.Controllers
 
             if (parsedNumber < 0)
             {
-                ViewBag.ErrorMessage = "The square root of a negative number cannot be calculated.";
+                ViewBag.ErrorMessage = "La raiz cuadrada de un numero negativo no se puede calcular.";
                 return View();
             }
 
