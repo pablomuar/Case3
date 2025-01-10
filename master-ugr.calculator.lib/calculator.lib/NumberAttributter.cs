@@ -29,12 +29,12 @@ namespace calculator.lib
         {
             return number % 2 != 0;
         }
-        
-        public static double? GetSquareRoot(int number)
+
+        public static double GetSquareRoot(int number)
         {
             if (number < 0)
             {
-                return null; // O manejar el caso de números negativos según los requisitos
+                throw new ArgumentException("La raiz cuadrada de un numero negativo no se puede calcular.");
             }
             return Math.Sqrt(number);
         }
