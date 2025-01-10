@@ -50,26 +50,22 @@ namespace calculator.frontend.tests.steps
             }
         }
 
-
         [Then(@"the calculated square root should be (.*)")]
-        public async Task ThenTheResultShouldBe(string expected)
+        public void ThenTheResultShouldBe(string expected)
         {
-            var page = _scenarioContext.Get<IPage>("page");
-            var resultText = await page.InnerTextAsync("#squareRoot");
-
-            if (expected == "null")
+            if (expected == "Exception")
             {
-                Assert.Equal("null", resultText);
-            }
-            else if (expected == "Exception")
-            {
-                var errorText = await page.InnerTextAsync("#error");
-                Assert.Contains("No se puede calcular", errorText);
+                Assert.True(_scenarioContext.ContainsKey("error"), "No se encontró un mensaje de error en el frontend.");
+                var errorMessage = _scenarioContext["error"].ToString();
+                Assert.Contains("La raiz cuadrada de un numero negativo no se puede calcular.", errorMessage);
             }
             else
             {
-                Assert.Equal(expected, resultText);
+                Assert.True(_scenarioContext.ContainsKey("squareRoot"), "No se encontró un resultado de raíz cuadrada en el frontend.");
+                var squareRoot = _scenarioContext["squareRoot"].ToString();
+                Assert.Equal(expected, squareRoot);
             }
         }
+
     }
 }
