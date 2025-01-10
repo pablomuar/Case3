@@ -2,7 +2,7 @@
     ViewBag.Title = "Attribute";
 }
 
-<h2>Atribute Calculator</h2>
+<h2>Attribute Calculator</h2>
 
 @using (Html.BeginForm())
 {
@@ -11,11 +11,17 @@
     <input type="text" id="number" name="number" />
 </div>
 <div>
-    <input type="submit" value="Atribute" id="attribute" />
+    <input type="submit" value="Attribute" id="attribute" />
 </div>
 }
 
-@if (ViewBag.IsPrime != null && ViewBag.IsOdd != null && ViewBag.SquareRoot != null)
+@if (ViewBag.ErrorMessage != null)
+{
+<div id="error" style="color: red;">
+    <h4>@ViewBag.ErrorMessage</h4>
+</div>
+}
+else if (ViewBag.IsPrime != null && ViewBag.IsOdd != null && ViewBag.SquareRoot != null)
 {
 <div>
     <h3>Is Prime:</h3><div id="isPrime"><h4>@ViewBag.IsPrime</h4></div>
