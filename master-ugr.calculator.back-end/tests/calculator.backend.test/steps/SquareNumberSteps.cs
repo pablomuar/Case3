@@ -36,23 +36,48 @@ namespace calculator.lib.test.steps
                 var urlBase = _scenarioContext.Get<string>("urlBase");
                 var url = $"{urlBase}api/Calculator/";
                 var api_call = $"{url}number_attribute?number={number}";
+
                 var response = client.GetAsync(api_call).Result;
-                response.EnsureSuccessStatusCode();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _scenarioContext.Add("StatusCode", (int)response.StatusCode);
+                    var errorMessage = response.Content.ReadAsStringAsync().Result;
+                    _scenarioContext.Add("ErrorMessage", errorMessage);
+                    return;
+                }
+
                 var responseBody = response.Content.ReadAsStringAsync().Result;
                 var jsonDocument = JsonDocument.Parse(responseBody);
+
                 var odd = jsonDocument.RootElement.GetProperty("odd").GetBoolean();
                 var prime = jsonDocument.RootElement.GetProperty("prime").GetBoolean();
                 var square = jsonDocument.RootElement.GetProperty("square").GetDouble();
+
                 _scenarioContext.Add("SquareRoot", square);
             }
         }
 
+
         [Then(@"the calculated square root should be (.*)")]
-        public async Task ThenTheSquareRootOfTheNumberIs(double expectedSquareRoot)
+        public void ThenTheSquareRootOfTheNumberIs(string expected)
         {
-            var squareRoot = _scenarioContext.Get<double>("SquareRoot");
-            Assert.Equal(squareRoot, expectedSquareRoot);
+            if (expected == "Exception")
+            {
+                var statusCode = _scenarioContext.Get<int>("StatusCode");
+                Assert.Equal(400, statusCode);
+
+                var errorMessage = _scenarioContext.Get<string>("ErrorMessage");
+                Assert.Contains("La raiz cuadrada de un numero negativo no se puede calcular.", errorMessage);
+            }
+            else
+            {
+                var expectedSquareRoot = double.Parse(expected);
+                var squareRoot = _scenarioContext.Get<double>("SquareRoot");
+                Assert.Equal(expectedSquareRoot, squareRoot);
+            }
         }
+
 
     }
 }
