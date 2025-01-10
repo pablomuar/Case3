@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using Xunit; // Usando Xunit para las aserciones
 
 namespace calculator.lib.test.steps
 {
@@ -11,30 +8,49 @@ namespace calculator.lib.test.steps
     public class SquareNumberSteps
     {
         private readonly ScenarioContext _scenarioContext;
+
         public SquareNumberSteps(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
         }
 
         [Given(@"a number to calculate square root (.*)")]
-        public void WhenNumberIsChecked(int number)
+        public void GivenANumberToCalculateSquareRoot(int number)
         {
-            _scenarioContext.Add("number", number);
+            _scenarioContext["number"] = number;
         }
 
-        [When("I calculate the square root")]
+        [When(@"I calculate the square root")]
         public void WhenICalculateTheSquareRoot()
         {
-            var number = _scenarioContext.Get<int>("number");
-            var square = NumberAttributter.GetSquareRoot(number);
-            _scenarioContext.Add("SquareRoot", square);
+            int number = _scenarioContext.Get<int>("number");
+            try
+            {
+                double result = NumberAttributter.GetSquareRoot(number);
+                _scenarioContext["result"] = result;
+            }
+            catch (ArgumentException ex)
+            {
+                _scenarioContext["result"] = "Exception";
+                _scenarioContext["exceptionMessage"] = ex.Message;
+            }
         }
 
-        [Then("the calculated square root should be (.*)")]
-        public void ThenTheSquareRootOfTheNumberIs(double expected)
+        [Then(@"the calculated square root should be (.*)")]
+        public void ThenTheCalculatedSquareRootShouldBe(string expected)
         {
-            var square = _scenarioContext.Get<double>("SquareRoot");
-            Assert.Equal(expected, square);
+            var result = _scenarioContext["result"].ToString();
+
+            if (expected == "Exception")
+            {
+                Assert.Equal("Exception", result);
+                Assert.Equal("La raíz cuadrada de un número negativo no se puede calcular.", _scenarioContext["exceptionMessage"].ToString());
+            }
+            else
+            {
+                double expectedResult = double.Parse(expected);
+                Assert.Equal(expectedResult, double.Parse(result));
+            }
         }
     }
 }
