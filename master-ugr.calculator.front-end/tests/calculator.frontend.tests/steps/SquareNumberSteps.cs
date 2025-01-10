@@ -24,16 +24,32 @@ namespace calculator.frontend.tests.steps
         [When(@"I calculate the square root")]
         public async Task WhenICalculateTheSquareRoot()
         {
-            var page = _scenarioContext.Get<IPage>("page");
-            var baseUrl = _scenarioContext.Get<string>("urlBase");
+            IPage page = _scenarioContext.Get<IPage>("page");
+            var base_url = _scenarioContext.Get<string>("urlBase");
             var number = _scenarioContext.Get<int>("number");
 
-            await page.GotoAsync($"{baseUrl}/Attribute");
+            await page.GotoAsync($"{base_url}/Attribute");
+
             await page.FillAsync("#number", number.ToString());
             await page.ClickAsync("#attribute");
 
-            await page.WaitForSelectorAsync("#result", new PageWaitForSelectorOptions { State = WaitForSelectorState.Attached });
+            var resultTask = page.WaitForSelectorAsync("#squareRoot", new PageWaitForSelectorOptions { State = WaitForSelectorState.Attached });
+            var errorTask = page.WaitForSelectorAsync("#error", new PageWaitForSelectorOptions { State = WaitForSelectorState.Attached });
+
+            var completedTask = await Task.WhenAny(resultTask, errorTask);
+
+            if (completedTask == errorTask)
+            {
+                var errorMessage = await page.InnerTextAsync("#error");
+                _scenarioContext["error"] = errorMessage;
+            }
+            else
+            {
+                var squareRoot = await page.InnerTextAsync("#squareRoot");
+                _scenarioContext["squareRoot"] = squareRoot;
+            }
         }
+
 
         [Then(@"the calculated square root should be (.*)")]
         public async Task ThenTheResultShouldBe(string expected)
