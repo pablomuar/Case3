@@ -1,8 +1,4 @@
 using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Xunit;
@@ -28,12 +24,15 @@ namespace calculator.frontend.tests.steps
         [When(@"I calculate the square root")]
         public async Task WhenICalculateTheSquareRoot()
         {
-            IPage page = _scenarioContext.Get<IPage>("page");
-            var base_url = _scenarioContext.Get<string>("urlBase");
+            var page = _scenarioContext.Get<IPage>("page");
+            var baseUrl = _scenarioContext.Get<string>("urlBase");
             var number = _scenarioContext.Get<int>("number");
-            await page.GotoAsync($"{base_url}/Attribute");
+
+            await page.GotoAsync($"{baseUrl}/Attribute");
             await page.FillAsync("#number", number.ToString());
             await page.ClickAsync("#attribute");
+
+            await page.WaitForSelectorAsync("#result", new PageWaitForSelectorOptions { State = WaitForSelectorState.Attached });
         }
 
         [Then(@"the calculated square root should be (.*)")]
@@ -41,9 +40,15 @@ namespace calculator.frontend.tests.steps
         {
             var page = _scenarioContext.Get<IPage>("page");
             var resultText = await page.InnerTextAsync("#squareRoot");
+
             if (expected == "null")
             {
                 Assert.Equal("null", resultText);
+            }
+            else if (expected == "Exception")
+            {
+                var errorText = await page.InnerTextAsync("#error");
+                Assert.Contains("No se puede calcular", errorText);
             }
             else
             {

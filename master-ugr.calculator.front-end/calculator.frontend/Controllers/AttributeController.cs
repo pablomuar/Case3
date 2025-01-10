@@ -21,36 +21,47 @@ namespace calculator.frontend.Controllers
             bool? raw_odd = null;
             double? raw_squareRoot = null;
 
-            var clientHandler = new HttpClientHandler();
-            var client = new HttpClient(clientHandler);
-            var url = $"{base_url}/api/Calculator/number_attribute?number={number}";
-            var request = new HttpRequestMessage
+            try
             {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(url),
-            };
+                var clientHandler = new HttpClientHandler();
+                var client = new HttpClient(clientHandler);
+                var url = $"{base_url}/api/Calculator/number_attribute?number={number}";
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri(url),
+                };
 
-            using (var response = client.Send(request))
+                using (var response = client.Send(request))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return ("Error", "Error", "Error");
+                    }
+
+                    var body = response.Content.ReadAsStringAsync().Result;
+                    var json = JObject.Parse(body);
+                    var prime = json["prime"];
+                    var odd = json["odd"];
+                    var squareRoot = json["square"];
+
+                    if (prime != null)
+                    {
+                        raw_prime = prime.Value<bool>();
+                    }
+                    if (odd != null)
+                    {
+                        raw_odd = odd.Value<bool>();
+                    }
+                    if (squareRoot != null)
+                    {
+                        raw_squareRoot = squareRoot.Value<double?>();
+                    }
+                }
+            }
+            catch (Exception ex)
             {
-                response.EnsureSuccessStatusCode();
-                var body = response.Content.ReadAsStringAsync().Result;
-                var json = JObject.Parse(body);
-                var prime = json["prime"];
-                var odd = json["odd"];
-                var squareRoot = json["square"];
-
-                if (prime != null)
-                {
-                    raw_prime = prime.Value<bool>();
-                }
-                if (odd != null)
-                {
-                    raw_odd = odd.Value<bool>();
-                }
-                if (squareRoot != null)
-                {
-                    raw_squareRoot = squareRoot.Value<double?>();
-                }
+                return ("unknown", "unknown", $"Error: {ex.Message}");
             }
 
             var isPrime = raw_prime.HasValue ? (raw_prime.Value ? "Yes" : "No") : "unknown";
@@ -63,10 +74,19 @@ namespace calculator.frontend.Controllers
         [HttpPost]
         public ActionResult Index(string number)
         {
+            if (string.IsNullOrWhiteSpace(number) || !int.TryParse(number, out _))
+            {
+                ViewBag.IsPrime = "Invalid input";
+                ViewBag.IsOdd = "Invalid input";
+                ViewBag.SquareRoot = "Invalid input";
+                return View();
+            }
+
             var result = ExecuteOperation(number);
             ViewBag.IsPrime = result.isPrime;
             ViewBag.IsOdd = result.isOdd;
             ViewBag.SquareRoot = result.squareRoot;
+
             return View();
         }
     }
