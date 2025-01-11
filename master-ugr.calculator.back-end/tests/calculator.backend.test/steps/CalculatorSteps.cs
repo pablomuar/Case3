@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -68,8 +69,16 @@ namespace calculator.lib.test.steps
         {
             ApiCall("add");
         }
+
+        //AGREGACION DE LOS METODOS PARA LOS PASOS DE LAS PRUEBAS
         [When(@"I divide first number by second number")]
         public void WhenIDivideFirstNumberBySecondNumber()
+        {
+            ApiCall("divide");
+        }
+
+        [When(@"I divide both numbers")]
+        public void WhenIDivideBothNumbers()
         {
             ApiCall("divide");
         }
@@ -96,12 +105,6 @@ namespace calculator.lib.test.steps
         }
 
         //DECLARAMOS LOS METODOS PARA LOS PASOS DE LAS PRUEBAS
-        [When(@"I divide both numbers")]
-        public void WhenIDivideBothNumbers()
-        {
-            ApiCall("divide");
-        }
-
         [Then(@"the result should be ""(.*)""")]
         public void ThenTheResultShouldBeSpecialValue(string expectedResult)
         {

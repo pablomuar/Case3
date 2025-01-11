@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace calculator.frontend.tests
+namespace calculator.backend.test
 {
     using TechTalk.SpecFlow;
     using System;
@@ -31,7 +31,7 @@ namespace calculator.frontend.tests
 #line 1 "SquareNumber.feature"
 #line hidden
         
-        public SquareRootCalculationFeature(SquareRootCalculationFeature.FixtureData fixtureData, calculator_frontend_tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public SquareRootCalculationFeature(SquareRootCalculationFeature.FixtureData fixtureData, calculator_backend_test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();

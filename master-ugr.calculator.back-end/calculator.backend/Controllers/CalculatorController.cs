@@ -31,11 +31,6 @@ namespace CalculatorAPI.Controllers
         [HttpGet("divide")]
         public ActionResult<double> Divide([FromQuery] double a, [FromQuery] double b)
         {
-            if(b == 0)
-            {
-                return BadRequest("NaN");
-            }
-
             var final_result = Calculator.Divide((int)a, (int)b);
 			return Ok(new { result = final_result });
         }
@@ -44,18 +39,29 @@ namespace CalculatorAPI.Controllers
         public ActionResult<bool> IsPrime([FromQuery] int number)
         {
             var is_prime = NumberAttributter.IsPrime(number);
-            var square = NumberAttributter.SquareRoot(number);
-            return Ok(new { result = is_prime,
-                            squareRoot = square
-            });
+            return Ok(new { result = is_prime });
         }
 
         [HttpGet("number_attribute")]
-        public ActionResult<bool> NumberAttribute([FromQuery] int number)
+        public ActionResult NumberAttribute([FromQuery] int number)
         {
-            var is_prime = NumberAttributter.IsPrime(number);
-            var is_odd = NumberAttributter.IsOdd(number);
-            return Ok(new { odd = is_odd, prime = is_prime });
+            try
+            {
+                var is_prime = NumberAttributter.IsPrime(number);
+                var is_odd = NumberAttributter.IsOdd(number);
+                var _square = NumberAttributter.GetSquareRoot(number);
+
+                return Ok(new { odd = is_odd, prime = is_prime, square = _square });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Error inesperado: {ex.Message}" });
+            }
         }
+
     }
 }

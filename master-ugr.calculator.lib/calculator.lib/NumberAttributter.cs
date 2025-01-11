@@ -30,15 +30,13 @@ namespace calculator.lib
             return number % 2 != 0;
         }
 
-        public static string SquareRoot(int number)
+        public static double GetSquareRoot(int number)
         {
             if (number < 0)
             {
-                return "Invalid input for square root"; 
+                throw new ArgumentException("La raiz cuadrada de un numero negativo no se puede calcular.");
             }
-
-            return Math.Sqrt(number).ToString();
+            return Math.Sqrt(number);
         }
-
     }
 }

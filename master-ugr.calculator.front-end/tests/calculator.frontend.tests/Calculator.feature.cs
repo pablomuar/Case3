@@ -279,7 +279,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("I divide both numbers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 41
- testRunner.Then("the result should be \"NaN\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("the result should be \"NaN\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

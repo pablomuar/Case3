@@ -34,5 +34,6 @@ namespace calculator.frontend.tests.steps
             var resultText = await page.InnerTextAsync("#isPrime");
             Assert.Equal(isPrime, resultText);
         }
+
     }
 }
