@@ -15,7 +15,7 @@ env:
     WORKING_DIRECTORY_FRONTEND: master-ugr.calculator.front-end/calculator.frontend
     CALCULATOR_FRONTEND_URL_UAT: https://pablomuar-calculator-frontend-uat.azurewebsites.net
     TEST_PATH_FRONTEND: master-ugr.calculator.front-end/tests/calculator.frontend.tests
-    CALCULATOR_FRONTEND_URL_PROD: https://master-ugr-ci-frontend.azurewebsites.net
+    CALCULATOR_FRONTEND_URL_PROD: https://pablomuar-calculator-frontend.azurewebsites.net
     # Back-end Domain
     AZURE_WEBAPP_NAME_BACKEND_UAT: pablomuar-calculator-backend-uat
     AZURE_WEBAPP_NAME_BACKEND_PROD: pablomuar-calculator-backend
