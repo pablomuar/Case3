@@ -11,8 +11,7 @@ namespace calculator.frontend.Controllers
 
         public AttributeController()
         {
-            _baseUrl = Environment.GetEnvironmentVariable("CALCULATOR_BACKEND_URL")
-                       ?? "https://master-ugr-ci-backend-uat.azurewebsites.net";
+            _baseUrl = Environment.GetEnvironmentVariable("CALCULATOR_BACKEND_URL") ?? "http://localhost:5226";
         }
 
         public IActionResult Index()
