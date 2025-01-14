@@ -16,8 +16,7 @@ namespace calculator.backend.test.Hooks
         {
 			// Getting url from environment variable
 			// When not present, default to http://localhost:5226
-			var urlBase =
-                Environment.GetEnvironmentVariable("CALCULATOR_BACKEND_URL") ?? "http://localhost:5226";
+			var urlBase = Environment.GetEnvironmentVariable("CALCULATOR_BACKEND_URL") ?? "http://localhost:5226";
             urlBase = urlBase + "/";
             _scenarioContext.Add("urlBase", urlBase);
         }
