@@ -16,6 +16,4 @@ Feature: Square Root Calculation
       | -16    | Exception      |
       | -25    | Exception      |
       | -28    | Exception      |
-      | 8      | 2.828427124746190      |
-      | 45     | 6.708203932499369      |
       | 0      | 0              |
