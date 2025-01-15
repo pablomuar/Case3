@@ -29,8 +29,8 @@
 name: SonarCloud analysis
 
 on:
-  push:
-    branches: [ "main", "dev", "lib", "back-end", "front-end" ]
+  #push:
+  #  branches: [ "main", "dev", "lib", "back-end", "front-end" ]
   #pull_request:
   #  branches: [ "main" ]
   workflow_dispatch:
@@ -43,6 +43,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Debug directory
+        run: |
+          echo "Current working directory: $(pwd)"
+          ls -R
+
       - name: Analyze with SonarCloud
 
         # You can pin the exact commit or the version.
@@ -57,8 +67,9 @@ jobs:
             # mandatory
             -Dsonar.projectKey=pablomuar_Case3
             -Dsonar.organization=pablomuar
+            -Dsonar.sources=master-ugr.calculator.back-end/calculator.backend/,master-ugr.calculator.front-end/calculator.frontend/,master-ugr.calculator.lib/calculator.lib/
+            -Dsonar.tests=master-ugr.calculator.back-end/tests/,master-ugr.calculator.front-end/tests/,master-ugr.calculator.lib/tests/
             # Comma-separated paths to directories containing main source files.
-            #-Dsonar.sources= # optional, default is project base directory
             # Comma-separated paths to directories containing test source files.
             #-Dsonar.tests= # optional. For more info about Code Coverage, please refer to https://docs.sonarcloud.io/enriching/test-coverage/overview/
             # Adds more detail to both client and server-side analysis logs, activating DEBUG mode for the scanner, and adding client-side environment variables and system properties to the server-side log of analysis report processing.

@@ -33,16 +33,16 @@ namespace calculator.frontend.Controllers
             // Llamada al backend
             var result = await ExecuteOperationAsync(number);
 
-            if (result.isError)
+            if (result["isError"] == "true")
             {
-                ViewBag.ErrorMessage = result.errorMessage;
+                ViewBag.ErrorMessage = result["errorMessage"];
                 return View();
             }
 
             // Mostrar resultados
-            ViewBag.IsPrime = result.isPrime;
-            ViewBag.IsOdd = result.isOdd;
-            ViewBag.SquareRoot = result.squareRoot;
+            ViewBag.IsPrime = result["isPrime"];
+            ViewBag.IsOdd = result["isOdd"];
+            ViewBag.SquareRoot = result["squareRoot"];
 
             return View();
         }
@@ -64,8 +64,17 @@ namespace calculator.frontend.Controllers
             return null;
         }
 
-        private async Task<(bool isError, string isPrime, string isOdd, string squareRoot, string errorMessage)> ExecuteOperationAsync(string number)
+        private async Task<Dictionary<string, string>> ExecuteOperationAsync(string number)
         {
+            var result = new Dictionary<string, string>
+            {
+                { "isError", "false" },
+                { "isPrime", "unknown" },
+                { "isOdd", "unknown" },
+                { "squareRoot", "unknown" },
+                { "errorMessage", string.Empty }
+            };
+
             try
             {
                 using var client = new HttpClient();
@@ -74,23 +83,25 @@ namespace calculator.frontend.Controllers
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    return (true, "Error", "Error", "Error", errorMessage);
+                    result["isError"] = "true";
+                    result["errorMessage"] = await response.Content.ReadAsStringAsync();
+                    return result;
                 }
 
                 var body = await response.Content.ReadAsStringAsync();
                 var json = JObject.Parse(body);
 
-                var isPrime = json["prime"]?.Value<bool>() == true ? "Yes" : "No";
-                var isOdd = json["odd"]?.Value<bool>() == true ? "Yes" : "No";
-                var squareRoot = json["square"]?.Value<double?>()?.ToString() ?? "null";
-
-                return (false, isPrime, isOdd, squareRoot, string.Empty);
+                result["isPrime"] = json["prime"]?.Value<bool>() == true ? "Yes" : "No";
+                result["isOdd"] = json["odd"]?.Value<bool>() == true ? "Yes" : "No";
+                result["squareRoot"] = json["square"]?.Value<double?>()?.ToString() ?? "null";
             }
             catch (Exception ex)
             {
-                return (true, "unknown", "unknown", "unknown", $"Unexpected error: {ex.Message}");
+                result["isError"] = "true";
+                result["errorMessage"] = $"Unexpected error: {ex.Message}";
             }
+
+            return result;
         }
     }
 }
