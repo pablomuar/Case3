@@ -61,7 +61,7 @@ jobs:
 
       - name: Analyze backend
         run: |
-          cd pablomuar_Case3/pablomuar_backend
+          cd pablomuar_Case3/master-ugr.calculator.back-end
           dotnet restore
           dotnet sonarscanner begin /k:"pablomuar_backend" /o:"pablomuar" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
           dotnet build
@@ -69,7 +69,7 @@ jobs:
 
       - name: Analyze frontend
         run: |
-          cd pablomuar_Case3/pablomuar_frontend
+          cd pablomuar_Case3/master-ugr.calculator.front-end
           dotnet restore
           dotnet sonarscanner begin /k:"pablomuar_frontend" /o:"pablomuar" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
           dotnet build
@@ -77,7 +77,7 @@ jobs:
 
       - name: Analyze lib
         run: |
-          cd pablomuar_Case3/pablomuar_lib
+          cd pablomuar_Case3/master-ugr.calculator.lib
           dotnet restore
           dotnet sonarscanner begin /k:"pablomuar_lib" /o:"pablomuar" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
           dotnet build
