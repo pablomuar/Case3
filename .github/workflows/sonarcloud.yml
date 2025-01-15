@@ -61,7 +61,8 @@ jobs:
 
       - name: Analyze backend
         run: |
-          cd pablomuar_Case3/master-ugr.calculator.back-end
+          ls
+          cd master-ugr.calculator.back-end
           dotnet restore
           dotnet sonarscanner begin /k:"pablomuar_backend" /o:"pablomuar" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
           dotnet build
