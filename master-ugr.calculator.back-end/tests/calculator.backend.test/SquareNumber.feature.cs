@@ -91,6 +91,7 @@ namespace calculator.backend.test
         [Xunit.InlineDataAttribute("-16", "Exception", new string[0])]
         [Xunit.InlineDataAttribute("-25", "Exception", new string[0])]
         [Xunit.InlineDataAttribute("-28", "Exception", new string[0])]
+        [Xunit.InlineDataAttribute("0", "0", new string[0])]
         public void CalculateTheSquareRootOfANumber(string number, string result, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
