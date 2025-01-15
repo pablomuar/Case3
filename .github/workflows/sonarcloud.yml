@@ -67,8 +67,8 @@ jobs:
             # mandatory
             -Dsonar.projectKey=pablomuar_Case3
             -Dsonar.organization=pablomuar
-            -Dsonar.sources=master-ugr.calculator.back-end/calculator.backend/
-            -Dsonar.tests=master-ugr.calculator.back-end/tests/
+            -Dsonar.sources=master-ugr.calculator.back-end/calculator.backend/,master-ugr.calculator.front-end/calculator.frontend/,master-ugr.calculator.lib/calculator.lib/
+            -Dsonar.tests=master-ugr.calculator.back-end/tests/,master-ugr.calculator.front-end/calculator.frontend/tests/,master-ugr.calculator.lib/calculator.lib/tests/
             # Comma-separated paths to directories containing main source files.
             # Comma-separated paths to directories containing test source files.
             #-Dsonar.tests= # optional. For more info about Code Coverage, please refer to https://docs.sonarcloud.io/enriching/test-coverage/overview/
