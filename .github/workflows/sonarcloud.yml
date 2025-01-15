@@ -62,23 +62,23 @@ jobs:
       - name: Analyze backend
         run: |
           cd master-ugr.calculator.back-end
-          dotnet restore
+          dotnet restore master-ugr.calculator.back-end.sln
           dotnet sonarscanner begin /k:"pablomuar_Case3" /o:"pablomuar" /d:sonar.projectBaseDir="." /d:sonar.moduleKey="backend" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-          dotnet build
+          dotnet build master-ugr.calculator.back-end.sln
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
       - name: Analyze frontend
         run: |
           cd master-ugr.calculator.front-end
-          dotnet restore
+          dotnet restore master-ugr.calculator.front-end.sln
           dotnet sonarscanner begin /k:"pablomuar_Case3" /o:"pablomuar" /d:sonar.projectBaseDir="." /d:sonar.moduleKey="frontend" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-          dotnet build
+          dotnet build master-ugr.calculator.front-end.sln
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
       - name: Analyze lib
         run: |
           cd master-ugr.calculator.lib
-          dotnet restore
+          dotnet restore master-ugr.calculator.lib.sln
           dotnet sonarscanner begin /k:"pablomuar_Case3" /o:"pablomuar" /d:sonar.projectBaseDir="." /d:sonar.moduleKey="lib" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-          dotnet build
+          dotnet build master-ugr.calculator.lib.sln
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
